@@ -1,3 +1,6 @@
+import 'package:careernepal/admin/college_add.dart';
+import 'package:careernepal/admin/college_course_add.dart';
+import 'package:careernepal/admin/course_add.dart';
 import 'package:careernepal/providers/login_provider.dart';
 import 'package:careernepal/providers/register_provider.dart';
 import 'package:careernepal/providers/splash_provider.dart';
@@ -35,7 +38,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const OnboardingScreen(),
+      home: const CollegeCourse_add(),
     );
   }
 }
