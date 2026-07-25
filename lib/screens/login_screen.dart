@@ -1,5 +1,6 @@
 import 'package:careernepal/core/snackar_bar.dart';
 import 'package:careernepal/core/validators.dart';
+import 'package:careernepal/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/custom_button.dart';
@@ -91,6 +92,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 CustomButton(
                   text: "Login",
                   onTap: () {
+
+                    Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()));
 
                     if (formKey.currentState!.validate()) {
 

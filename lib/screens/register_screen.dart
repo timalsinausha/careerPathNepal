@@ -1,4 +1,5 @@
 import 'package:careernepal/core/snackar_bar.dart';
+import 'package:careernepal/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -221,8 +222,12 @@ class _RegisterScreenState
                       ),
 
                       GestureDetector(
-                        onTap: () {},
-
+                        onTap: () {
+                         Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()));
+                        },
                         child: const Text(
                           "Login",
 
