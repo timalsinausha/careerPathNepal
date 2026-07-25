@@ -72,7 +72,7 @@ class _RegisterScreenState
                   /// FULL NAME
                   CustomTextField(
                     labelText:
-                        "Enter Full Name",
+                        "Enter First Name",
 
                     hintText: "abc",
 
@@ -85,6 +85,21 @@ class _RegisterScreenState
                   ),
 
                   const SizedBox(height: 15),
+
+                                    CustomTextField(
+                    labelText:
+                        "Enter Last Name",
+
+                    hintText: "abc",
+
+                    controller:
+                        nameController,
+
+                    validator:
+                        Validators
+                            .validateName,
+                  ),
+
 
                   /// CONTACT
                   CustomTextField(
@@ -104,12 +119,12 @@ class _RegisterScreenState
 
                   const SizedBox(height: 15),
 
-                  /// ADDRESS
+               
                   CustomTextField(
                     labelText:
-                        "Enter Address",
+                        "Enter Email",
 
-                    hintText: "Banepa",
+                    hintText: "abc@gmail.com",
 
                     controller:
                         addressController,
@@ -165,10 +180,10 @@ class _RegisterScreenState
                     isPassword: true,
                   ),
 
-                  const SizedBox(height: 15),
+                  // const SizedBox(height: 15),
 
-                  /// DROPDOWN
-                  const CustomDropdown(),
+                  // /// DROPDOWN
+                  // const CustomDropdown(),
 
                   const SizedBox(height: 30),
 
