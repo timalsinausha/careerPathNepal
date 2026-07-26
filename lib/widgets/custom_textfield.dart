@@ -1,4 +1,4 @@
-import 'package:careernepal/providers/login_provider.dart';
+import 'package:careernepal/auth/provider/login_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -40,8 +40,8 @@ class CustomTextField extends StatelessWidget {
         TextFormField(
           controller: controller,
           validator: validator,
-          obscureText:
-              isPassword ? provider.isPasswordHidden : false,
+         // obscureText:
+             // isPassword ? provider.isPasswordHidden : false,
 
           decoration: InputDecoration(
             hintText: hintText,
@@ -56,12 +56,14 @@ class CustomTextField extends StatelessWidget {
             suffixIcon: isPassword
                 ? IconButton(
                     onPressed: () {
-                      provider.togglePassword();
+                     //
+                     // provider.togglePassword();
                     },
                     icon: Icon(
-                      provider.isPasswordHidden
-                          ? Icons.visibility_off
-                          : Icons.visibility,
+                      // provider.isPasswordHidden
+                      //     ? Icons.visibility_off
+                      //     : 
+                          Icons.visibility,
                     ),
                   )
                 : null,

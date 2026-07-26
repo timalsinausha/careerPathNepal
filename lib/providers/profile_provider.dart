@@ -1,4 +1,4 @@
-import 'package:careernepal/models/profile_model.dart';
+import 'package:careernepal/auth/profile_model.dart';
 import 'package:flutter/material.dart';
 
 

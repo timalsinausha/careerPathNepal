@@ -1,7 +1,7 @@
 import 'package:careernepal/main_navigation_screen.dart';
 import 'package:careernepal/providers/bottom_nav_provider.dart';
 import 'package:careernepal/providers/career_result_provider.dart';
-import 'package:careernepal/providers/login_provider.dart';
+import 'package:careernepal/auth/provider/login_provider.dart';
 import 'package:careernepal/providers/profile_provider.dart';
 import 'package:careernepal/providers/register_provider.dart';
 import 'package:careernepal/providers/splash_provider.dart';

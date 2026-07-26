@@ -1,6 +1,6 @@
 import 'package:careernepal/screens/course_details_screen.dart';
 import 'package:flutter/material.dart';
-import '../models/course_model.dart';
+import '../auth/course_model.dart';
 
 class CourseScreen extends StatefulWidget {
   const CourseScreen({super.key});

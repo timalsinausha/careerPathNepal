@@ -1,4 +1,4 @@
-import '../models/quiz_model.dart';
+import '../auth/quiz_model.dart';
 
 final List<QuizModel> questions = [
   QuizModel(

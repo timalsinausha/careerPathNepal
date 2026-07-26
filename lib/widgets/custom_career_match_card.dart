@@ -1,6 +1,6 @@
 import 'package:careernepal/widgets/custom_circular_score.dart';
 import 'package:flutter/material.dart';
-import '../models/career_result_model.dart';
+import '../auth/career_result_model.dart';
 
 
 class CustomCareerMatchCard extends StatelessWidget {

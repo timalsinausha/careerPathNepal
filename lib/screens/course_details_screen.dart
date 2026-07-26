@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/course_model.dart';
+import '../auth/course_model.dart';
 
 class CourseDetailScreen extends StatelessWidget {
   final CourseModel course;

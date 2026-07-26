@@ -7,11 +7,14 @@ class CustomButton extends StatelessWidget {
 
   final String text;
   final VoidCallback onTap;
+   final bool isLoading;
+
 
   const CustomButton({
     super.key,
     required this.text,
     required this.onTap,
+    this.isLoading = false,
   });
 
   @override
@@ -28,10 +31,16 @@ class CustomButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(6),
           ),
         ),
-        child: Text(
-          text,
-          style: AppTextStyles.buttonText,
-        ),
+        child: isLoading
+      ? const SizedBox(
+          width: 22,
+          height: 22,
+          child: CircularProgressIndicator(
+            strokeWidth: 2.5,
+            color: Colors.white,
+          ),
+        )
+      : Text(text),
       ),
     );
   }

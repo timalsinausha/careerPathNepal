@@ -1,7 +1,9 @@
+import 'package:careernepal/auth/provider/login_provider.dart';
 import 'package:careernepal/core/snackar_bar.dart';
 import 'package:careernepal/core/validators.dart';
 import 'package:careernepal/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text.dart';
@@ -22,121 +24,138 @@ class _LoginScreenState extends State<LoginScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  @override
-  Widget build(BuildContext context) {
+@override
+Widget build(BuildContext context) {
+  return Consumer<LoginProvider>(
+    builder: (context, loginProvider, child) {
+      return Scaffold(
+        backgroundColor: Colors.white,
 
-    return Scaffold(
-      backgroundColor: Colors.white,
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
 
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(15),
+                  const SizedBox(height: 40),
 
-          child: Form(
-            key: formKey,
-
-            child: Column(
-              children: [
-
-                const SizedBox(height: 40),
-
-                /// IMAGE
-                Center(
-                  child: Image.asset(
-                    "assets/images/login_screen_photo.png",
-                    height: 170,
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-
-                /// EMAIL FIELD
-                CustomTextField(
-                  hintText: "abc@gmail.com",
-                  labelText: "Enter Email",
-                  controller: emailController,
-                  validator: Validators.validateEmail,
-                ),
-
-                const SizedBox(height: 18),
-
-                /// PASSWORD FIELD
-                CustomTextField(
-                  hintText: "********",
-                  labelText: "Enter Password",
-                  controller: passwordController,
-                  validator: Validators.validatePassword,
-                  isPassword: true,
-                ),
-
-                const SizedBox(height: 8),
-
-                /// FORGOT PASSWORD
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: const Text(
-                      "Forget Password",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 12,
-                      ),
+                  Center(
+                    child: Image.asset(
+                      "assets/images/login_screen_photo.png",
+                      height: 170,
                     ),
                   ),
-                ),
 
-                const SizedBox(height: 25),
+                  const SizedBox(height: 20),
 
-                /// LOGIN BUTTON
-                CustomButton(
-                  text: "Login",
-                  onTap: () {
+                  CustomTextField(
+                    hintText: "abc@gmail.com",
+                    labelText: "Enter Email",
+                    controller: emailController,
+                    validator: Validators.validateEmail,
+                  ),
 
-                    Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeScreen()));
+                  const SizedBox(height: 18),
 
-                    if (formKey.currentState!.validate()) {
+                  CustomTextField(
+                    hintText: "********",
+                    labelText: "Enter Password",
+                    controller: passwordController,
+                    validator: Validators.validatePassword,
+                    isPassword: true,
+                  ),
 
-                      showSnackBar(
-                        context,
-                        "Login Successful",
-                      );
-                    }
-                  },
-                ),
+                  const SizedBox(height: 8),
 
-                const SizedBox(height: 25),
-
-                /// REGISTER
-                Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.center,
-                  children: [
-
-                    const CustomText(
-                      text: "Don’t have Account? ",
-                    ),
-
-                    GestureDetector(
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
                       onTap: () {},
                       child: const Text(
-                        "Register",
+                        "Forget Password",
                         style: TextStyle(
                           color: Colors.blue,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ],
+                  ),
+
+                  const SizedBox(height: 25),
+
+                  CustomButton(
+                   text: "Login",
+                   isLoading: loginProvider.isLoading,
+                    onTap: () async {
+
+                      if (!formKey.currentState!.validate()) {
+                        return;
+                      }
+
+                      final success = await loginProvider.login(
+                        email: emailController.text.trim(),
+                        password: passwordController.text,
+                      );
+
+                      if (!mounted) return;
+
+                      if (success) {
+
+                        showSnackBar(
+                          context,
+                          "Login Successful",
+                        );
+
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const HomeScreen(),
+                          ),
+                        );
+
+                      } else {
+
+                        showSnackBar(
+                          context,
+                          loginProvider.errorMessage ??
+                              "Login Failed",
+                        );
+
+                      }
+                    },
+                  ),
+
+                  const SizedBox(height: 25),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+
+                      const CustomText(
+                        text: "Don’t have Account? ",
+                      ),
+
+                      GestureDetector(
+                        onTap: () {},
+                        child: const Text(
+                          "Register",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
+    },
+  );
+}
 }
