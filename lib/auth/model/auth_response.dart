@@ -1,19 +1,19 @@
 import 'package:careernepal/auth/model/user_moel.dart';
 
 
-class LoginResponse {
+class AuthResponse {
   final String access;
   final String refresh;
   final UserModel user;
 
-  LoginResponse({
+  AuthResponse({
     required this.access,
     required this.refresh,
     required this.user,
   });
 
-  factory LoginResponse.fromJson(Map<String, dynamic> json) {
-    return LoginResponse(
+  factory AuthResponse.fromJson(Map<String, dynamic> json) {
+    return AuthResponse(
       access: json["access"],
       refresh: json["refresh"],
       user: UserModel.fromJson(json["user"]),

@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import '../model/login_request.dart';
-import '../model/login_response.dart';
+import '../model/auth_response.dart';
 import '../repository/auth_repository.dart';
+import '../service/auth_storage_service.dart';
 
 class LoginProvider extends ChangeNotifier {
   final AuthRepository _repository = AuthRepository();
 
   bool _isLoading = false;
   String? _errorMessage;
-  LoginResponse? _loginResponse;
+  AuthResponse? _loginResponse;
 
   bool get isLoading => _isLoading;
 
   String? get errorMessage => _errorMessage;
 
-  LoginResponse? get loginResponse => _loginResponse;
+  AuthResponse? get loginResponse => _loginResponse;
 
   bool get isLoggedIn => _loginResponse != null;
 
@@ -34,6 +35,11 @@ class LoginProvider extends ChangeNotifier {
       );
 
       _loginResponse = response;
+
+      await AuthStorageService.instance.saveTokens(
+      accessToken: response.access,
+      refreshToken: response.refresh,
+    );
 
       _setLoading(false);
 

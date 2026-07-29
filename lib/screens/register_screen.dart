@@ -1,13 +1,13 @@
 import 'package:careernepal/core/snackar_bar.dart';
+import 'package:careernepal/core/validators.dart';
+import 'package:careernepal/screens/home_screen.dart';
 import 'package:careernepal/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../core/validators.dart';
-import '../providers/register_provider.dart';
-
+import '../auth/model/register_request.dart';
+import '../auth/provider/register_provider.dart';
 import '../widgets/custom_button.dart';
-import '../widgets/custom_dropdown.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/custom_textfield.dart';
 
@@ -15,237 +15,206 @@ class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() =>
-      _RegisterScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState
-    extends State<RegisterScreen> {
-
+class _RegisterScreenState extends State<RegisterScreen> {
   final formKey = GlobalKey<FormState>();
 
-  final nameController =
-      TextEditingController();
+  final firstnameController = TextEditingController();
+  final lastnameController = TextEditingController();
+  final contactController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
-  final contactController =
-      TextEditingController();
-
-  final addressController =
-      TextEditingController();
-
-  final passwordController =
-      TextEditingController();
-
-  final confirmPasswordController =
-      TextEditingController();
+  @override
+  void dispose() {
+    firstnameController.dispose();
+    lastnameController.dispose();
+    contactController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    return Consumer<RegisterProvider>(
+      builder: (context, registerProvider, child) {
+        return Scaffold(
+          backgroundColor: Colors.grey.shade200,
+          body: SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(14),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 25),
 
-    return ChangeNotifierProvider(
-      create: (_) => RegisterProvider(),
+                    /// IMAGE
+                    Image.asset(
+                      "assets/images/signup_image.png",
+                      height: 180,
+                    ),
 
-      child: Scaffold(
-        backgroundColor:
-            Colors.grey.shade200,
+                    const SizedBox(height: 20),
 
-        body: SafeArea(
-          child: SingleChildScrollView(
-            padding:
-                const EdgeInsets.all(14),
+                    /// FIRST NAME
+                    CustomTextField(
+                      labelText: "Enter First Name",
+                      hintText: "John",
+                      controller: firstnameController,
+                      validator: Validators.validateName,
+                    ),
 
-            child: Form(
-              key: formKey,
+                    const SizedBox(height: 15),
 
-              child: Column(
-                children: [
+                    /// LAST NAME
+                    CustomTextField(
+                      labelText: "Enter Last Name",
+                      hintText: "Doe",
+                      controller: lastnameController,
+                      validator: Validators.validateName,
+                    ),
 
-                  const SizedBox(height: 25),
+                    const SizedBox(height: 15),
 
-                  /// IMAGE
-                  Image.asset(
-                    "assets/images/signup_image.png",
-                    height: 180,
-                  ),
+                    /// EMAIL
+                    CustomTextField(
+                      labelText: "Enter Email",
+                      hintText: "abc@gmail.com",
+                      controller: emailController,
+                      validator: Validators.validateAddress,
+                    ),
 
-                  const SizedBox(height: 20),
+                    const SizedBox(height: 15),
 
-                  /// FULL NAME
-                  CustomTextField(
-                    labelText:
-                        "Enter First Name",
+                    /// CONTACT
+                    CustomTextField(
+                      labelText: "Enter Contact",
+                      hintText: "9861XXXXXX",
+                      controller: contactController,
+                      validator: Validators.validatePhone,
+                    ),
 
-                    hintText: "abc",
+                    const SizedBox(height: 15),
 
-                    controller:
-                        nameController,
+                    /// PASSWORD
+                    CustomTextField(
+                      labelText: "Enter Password",
+                      hintText: "********",
+                      controller: passwordController,
+                      validator: Validators.validatePassword,
+                      isPassword: true,
+                    ),
 
-                    validator:
-                        Validators
-                            .validateName,
-                  ),
+                    const SizedBox(height: 15),
 
-                  const SizedBox(height: 15),
-
-                                    CustomTextField(
-                    labelText:
-                        "Enter Last Name",
-
-                    hintText: "abc",
-
-                    controller:
-                        nameController,
-
-                    validator:
-                        Validators
-                            .validateName,
-                  ),
-
-
-                  /// CONTACT
-                  CustomTextField(
-                    labelText:
-                        "Enter Contact",
-
-                    hintText:
-                        "9861XXXXXX",
-
-                    controller:
-                        contactController,
-
-                    validator:
-                        Validators
-                            .validatePhone,
-                  ),
-
-                  const SizedBox(height: 15),
-
-               
-                  CustomTextField(
-                    labelText:
-                        "Enter Email",
-
-                    hintText: "abc@gmail.com",
-
-                    controller:
-                        addressController,
-
-                    validator:
-                        Validators
-                            .validateAddress,
-                  ),
-
-                  const SizedBox(height: 15),
-
-                  /// PASSWORD
-                  CustomTextField(
-                    labelText:
-                        "Enter Password",
-
-                    hintText:
-                        "********",
-
-                    controller:
-                        passwordController,
-
-                    validator:
-                        Validators
-                            .validatePassword,
-
-                    isPassword: true,
-                  ),
-
-                  const SizedBox(height: 15),
-
-                  /// CONFIRM PASSWORD
-                  CustomTextField(
-                    labelText:
-                        "Enter Confirm Password",
-
-                    hintText:
-                        "********",
-
-                    controller:
-                        confirmPasswordController,
-
-                    validator: (value) {
-
-                      return Validators
-                          .validateConfirmPassword(
-                        value,
-                        passwordController
-                            .text,
-                      );
-                    },
-
-                    isPassword: true,
-                  ),
-
-                  // const SizedBox(height: 15),
-
-                  // /// DROPDOWN
-                  // const CustomDropdown(),
-
-                  const SizedBox(height: 30),
-
-                  /// BUTTON
-                  CustomButton(
-                    text: "Register",
-
-                    onTap: () {
-
-                      if (formKey
-                          .currentState!
-                          .validate()) {
-
-                        showSnackBar(
-                          context,
-                          "Register Successful",
+                    /// CONFIRM PASSWORD
+                    CustomTextField(
+                      labelText: "Confirm Password",
+                      hintText: "********",
+                      controller: confirmPasswordController,
+                      validator: (value) {
+                        return Validators.validateConfirmPassword(
+                          value,
+                          passwordController.text,
                         );
-                      }
-                    },
-                  ),
+                      },
+                      isPassword: true,
+                    ),
 
-                  const SizedBox(height: 20),
+                    const SizedBox(height: 30),
 
-                  /// LOGIN
-                  Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment
-                            .center,
+                    /// REGISTER BUTTON
+                    CustomButton(
+                      text: "Register",
+                      isLoading: registerProvider.isLoading,
 
-                    children: [
+                      onTap: () async {
+                              if (!formKey.currentState!.validate()) {
+                                return;
+                              }
 
-                      const CustomText(
-                        text:
-                            "Already have Account? ",
-                      ),
+                              final request = RegisterRequest(
+                                firstName: firstnameController.text.trim(),
+                                lastName: lastnameController.text.trim(),
+                                email: emailController.text.trim(),
+                                contactNumber: contactController.text.trim(),
+                                password: passwordController.text,
+                                confirmPassword:
+                                    confirmPasswordController.text,
+                              );
 
-                      GestureDetector(
-                        onTap: () {
-                         Navigator.push(
+                              try {
+                                await registerProvider.register(request);
+
+                                 if (!context.mounted) return;
+
+                                showSnackBar(
+                                  context,
+                                  "Registration Successful",
+                                );
+
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const LoginScreen(),
+                                  ),
+                                  (route) => false,
+                                );
+                              }catch (e, stackTrace) {
+                              debugPrint("REGISTER ERROR: $e");
+                              debugPrintStack(stackTrace: stackTrace);
+
+                              if (!context.mounted) return;
+
+                              showSnackBar(
+                                context,
+                                e.toString(),
+                              );
+                            }
+                            },
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    /// LOGIN
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const CustomText(
+                          text: "Already have an account? ",
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
-                        },
-                        child: const Text(
-                          "Login",
-
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight:
-                                FontWeight.bold,
+                                builder: (_) => const LoginScreen(),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

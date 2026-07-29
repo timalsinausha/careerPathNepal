@@ -2,9 +2,11 @@ import 'package:careernepal/auth/provider/login_provider.dart';
 import 'package:careernepal/core/snackar_bar.dart';
 import 'package:careernepal/core/validators.dart';
 import 'package:careernepal/screens/home_screen.dart';
+import 'package:careernepal/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../auth/service/auth_storage_service.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/custom_textfield.dart';
@@ -107,6 +109,10 @@ Widget build(BuildContext context) {
                           context,
                           "Login Successful",
                         );
+                        final token =
+                          await AuthStorageService.instance.getAccessToken();
+
+                      debugPrint(token);
 
                         Navigator.pushReplacement(
                           context,
@@ -138,7 +144,14 @@ Widget build(BuildContext context) {
                       ),
 
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const RegisterScreen(),
+                          ),
+                        );
+                        },
                         child: const Text(
                           "Register",
                           style: TextStyle(

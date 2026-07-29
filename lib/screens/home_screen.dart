@@ -1,7 +1,12 @@
 import 'package:careernepal/screens/college_screen.dart';
 import 'package:careernepal/screens/course_screen.dart';
+import 'package:careernepal/screens/login_screen.dart';
 import 'package:careernepal/screens/quiz_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../auth/provider/auth_provider.dart';
+import '../core/dialogs/confirmation_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -9,6 +14,39 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    appBar:   AppBar(
+        title: const Text("Home"),
+        actions: [IconButton(
+  icon: const Icon(Icons.logout),
+  onPressed: () async {
+
+    final shouldLogout =
+        await ConfirmationDialog.show(
+      context: context,
+      title: "Logout",
+      message: "Are you sure you want to log out?",
+      confirmText: "Yes",
+      cancelText: "NO",
+    );
+
+    if (!shouldLogout) return;
+
+    await context.read<AuthProvider>().logout();
+
+    if (!context.mounted) return;
+
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const LoginScreen(),
+      ),
+      (route) => false,
+    );
+  },
+)
+
+        ],
+      ),
       backgroundColor: const Color(0xffF8FAFF),
       body: SafeArea(
         child: SingleChildScrollView(

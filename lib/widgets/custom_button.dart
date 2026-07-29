@@ -6,7 +6,7 @@ import '../core/colors.dart';
 class CustomButton extends StatelessWidget {
 
   final String text;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
    final bool isLoading;
 
 
@@ -24,7 +24,7 @@ class CustomButton extends StatelessWidget {
       width: double.infinity,
       height: 55,
       child: ElevatedButton(
-        onPressed: onTap,
+        onPressed:isLoading ? null : onTap,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
           shape: RoundedRectangleBorder(

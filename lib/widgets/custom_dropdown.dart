@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/register_provider.dart';
+
 
 class CustomDropdown extends StatelessWidget {
 
@@ -9,8 +9,8 @@ class CustomDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final provider =
-        Provider.of<RegisterProvider>(context);
+    // final provider =
+    //     Provider.of<RegisterProvider>(context);
 
     return Column(
       crossAxisAlignment:
@@ -38,23 +38,23 @@ class CustomDropdown extends StatelessWidget {
 
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
-              value: provider.education,
+             // value: provider.education,
               isExpanded: true,
 
-              items:
-                  provider.educationList.map((e) {
+              items:[],
+              //     provider.educationList.map((e) {
 
-                return DropdownMenuItem(
-                  value: e,
-                  child: Text(e),
-                );
-              }).toList(),
+              //   return DropdownMenuItem(
+              //     value: e,
+              //     child: Text(e),
+              //   );
+              // }).toList(),
 
               onChanged: (value) {
 
-                provider.changeEducation(
-                  value!,
-                );
+                // provider.changeEducation(
+                //   value!,
+                // );
               },
             ),
           ),

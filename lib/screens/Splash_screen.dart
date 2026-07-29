@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/splash_provider.dart';
+import '../auth/provider/splashProvider.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,37 +16,47 @@ class _SplashScreenState extends State<SplashScreen>
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
 
-  @override
-  void initState() {
-    super.initState();
+@override
+void initState() {
+  super.initState();
 
-    // 🔥 Animation setup
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 2),
-    );
+  _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 2),
+  );
 
-    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
-    );
+  _fadeAnimation = Tween<double>(
+    begin: 0,
+    end: 1,
+  ).animate(
+    CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
+    ),
+  );
 
-    _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
-    );
+  _scaleAnimation = Tween<double>(
+    begin: 0.8,
+    end: 1,
+  ).animate(
+    CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOutBack,
+    ),
+  );
 
-    _controller.forward();
-
-    // 🔥 Navigate after delay
-    Future.microtask(() {
-      Provider.of<SplashProvider>(context, listen: false).startSplash(context);
-    });
-  }
+  _controller.forward();
+ Future.microtask(() {
+    context.read<SplashProvider>().startSplash(context);
+  });
+}
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {

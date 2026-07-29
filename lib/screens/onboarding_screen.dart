@@ -1,6 +1,8 @@
+import 'package:careernepal/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../auth/onboarding_model.dart';
+import '../auth/service/onboarding_storage.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/onboarding_page.dart';
 import '../widgets/page_indicator.dart';
@@ -100,21 +102,30 @@ class _OnboardingScreenState
                     ? "Get Started"
                     : "Next",
 
-                onTap: () {
+              onTap: () async {
 
-                  if (currentIndex <
-                      pages.length - 1) {
+                if (currentIndex < pages.length - 1) {
 
-                    controller.nextPage(
-                      duration:
-                          const Duration(
-                        milliseconds: 400,
-                      ),
+                  controller.nextPage(
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.easeIn,
+                  );
 
-                      curve: Curves.easeIn,
-                    );
-                  }
-                },
+                } else {
+
+                  await OnboardingStorageService.instance
+                      .completeOnboarding();
+
+                  if (!mounted) return;
+
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const LoginScreen(),
+                    ),
+                  );
+                }
+              },
               ),
             ),
 
