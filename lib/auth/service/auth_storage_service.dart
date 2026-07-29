@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthStorageService {
@@ -25,6 +26,11 @@ class AuthStorageService {
       key: refreshTokenKey,
       value: refreshToken,
     );
+    debugPrint("ACCESS TOKEN:");
+debugPrint(accessToken);
+
+debugPrint("REFRESH TOKEN:");
+debugPrint(refreshToken);
   }
 
   Future<String?> getAccessToken() async {
@@ -38,6 +44,13 @@ class AuthStorageService {
       key: refreshTokenKey,
     );
   }
+
+  Future<void> updateAccessToken(String accessToken) async {
+  await _storage.write(
+    key: accessTokenKey,
+    value: accessToken,
+  );
+}
 
   Future<void> clearTokens() async {
     await _storage.delete(

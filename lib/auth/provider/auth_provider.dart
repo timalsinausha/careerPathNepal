@@ -16,4 +16,8 @@ class AuthProvider {
 
 }
 
+Future<void> forceLogout() async {
+  await AuthStorageService.instance.clearTokens();
+}
+
 }

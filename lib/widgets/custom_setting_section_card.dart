@@ -1,4 +1,4 @@
-import 'package:careernepal/providers/profile_provider.dart';
+import 'package:careernepal/auth/provider/profile_provider.dart';
 import 'package:careernepal/widgets/custom_setting_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +25,7 @@ class CustomSettingSectionCard extends StatelessWidget {
 
           /// Profile Tile
          CustomSettingTile(
-            title: profile.name,
+            title:" profile.name",
             icon: Icons.account_circle_outlined,
             onTap: () {},
           ),

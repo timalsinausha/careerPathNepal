@@ -9,7 +9,7 @@ import '../model/register_request.dart';
 
 
 class AuthApiService {
-  final Dio _dio = DioClient.dio;
+  final Dio _dio = DioClient.refreshDio;
 
   Future<AuthResponse> login(LoginRequest request) async {
     try {
@@ -32,13 +32,28 @@ class AuthApiService {
       data: request.toJson(),
     );
     debugPrint("REGISTER RESPONSE:");
-debugPrint(response.data.toString());
-print(response.data);
+    debugPrint(response.data.toString());
+    print(response.data);
     return response.data["message"];
     //AuthResponse.fromJson(response.data);
   } on DioException catch (e) {
       debugPrint("STATUS CODE: ${e.response?.statusCode}");
   debugPrint("ERROR DATA: ${e.response?.data}");
+    throw Exception(_handleError(e));
+  }
+}
+
+Future<String> refreshToken(String refreshToken) async {
+  try {
+    final response = await _dio.post(
+      ApiConstants.refreshToken,
+      data: {
+        "refresh": refreshToken,
+      },
+    );
+
+    return response.data["access"];
+  } on DioException catch (e) {
     throw Exception(_handleError(e));
   }
 }

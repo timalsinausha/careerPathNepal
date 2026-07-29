@@ -1,11 +1,14 @@
 import 'package:careernepal/auth/provider/login_provider.dart';
 import 'package:careernepal/core/snackar_bar.dart';
 import 'package:careernepal/core/validators.dart';
+import 'package:careernepal/screens/academic_profile_page.dart';
 import 'package:careernepal/screens/home_screen.dart';
+import 'package:careernepal/screens/profile_screen.dart';
 import 'package:careernepal/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../auth/provider/profile_provider.dart';
 import '../auth/service/auth_storage_service.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text.dart';
@@ -88,10 +91,9 @@ Widget build(BuildContext context) {
                   const SizedBox(height: 25),
 
                   CustomButton(
-                   text: "Login",
-                   isLoading: loginProvider.isLoading,
+                    text: "Login",
+                    isLoading: loginProvider.isLoading,
                     onTap: () async {
-
                       if (!formKey.currentState!.validate()) {
                         return;
                       }
@@ -101,38 +103,66 @@ Widget build(BuildContext context) {
                         password: passwordController.text,
                       );
 
-                      if (!mounted) return;
+                      if (!context.mounted) return;
 
                       if (success) {
+                        try {
+                          final profileProvider =
+                              context.read<ProfileProvider>();
 
-                        showSnackBar(
-                          context,
-                          "Login Successful",
-                        );
-                        final token =
-                          await AuthStorageService.instance.getAccessToken();
+                          final profile =
+                              await profileProvider.getProfile();
 
-                      debugPrint(token);
+                          if (!context.mounted) return;
 
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const HomeScreen(),
-                          ),
-                        );
+                          showSnackBar(
+                            context,
+                            "Login Successful",
+                          );
 
+                          await Future.delayed(
+                            const Duration(seconds: 1),
+                          );
+
+                          if (!context.mounted) return;
+
+                          if (profile.studentProfile.isProfileCompleted) {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const HomeScreen(),
+                              ),
+                              (route) => false,
+                            );
+                          } else {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const StudentAcademicProfilePage(),
+                              ),
+                              (route) => false,
+                            );
+                          }
+                        } catch (e) {
+                          if (!context.mounted) return;
+
+                          showSnackBar(
+                            context,
+                            e.toString().replaceFirst(
+                              "Exception: ",
+                              "",
+                            ),
+                          );
+                        }
                       } else {
-
                         showSnackBar(
                           context,
                           loginProvider.errorMessage ??
                               "Login Failed",
                         );
-
                       }
                     },
                   ),
-
                   const SizedBox(height: 25),
 
                   Row(
