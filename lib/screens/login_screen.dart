@@ -1,7 +1,7 @@
 import 'package:careernepal/auth/provider/login_provider.dart';
 import 'package:careernepal/core/snackar_bar.dart';
 import 'package:careernepal/core/validators.dart';
-import 'package:careernepal/screens/academic_profile_page.dart';
+import 'package:careernepal/screens/profile_firststep.dart';
 import 'package:careernepal/screens/home_screen.dart';
 import 'package:careernepal/screens/profile_screen.dart';
 import 'package:careernepal/screens/register_screen.dart';
@@ -138,7 +138,7 @@ Widget build(BuildContext context) {
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => const StudentAcademicProfilePage(),
+                                builder: (_) => const ProfileFirstStep(),
                               ),
                               (route) => false,
                             );

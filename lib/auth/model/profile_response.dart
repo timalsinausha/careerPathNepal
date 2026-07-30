@@ -15,6 +15,7 @@ class ProfileResponse {
       studentProfile: StudentProfileModel.fromJson(
         json["student_profile"],
       ),
+      
     );
   }
 }

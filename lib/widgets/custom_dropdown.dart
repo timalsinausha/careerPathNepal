@@ -1,61 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
+class CustomDropdown<T> extends StatelessWidget {
+  final String label;
+  final T? value;
+  final List<DropdownMenuItem<T>> items;
+  final ValueChanged<T?> onChanged;
+  final String? Function(T?)? validator;
+  final IconData? icon;
 
-class CustomDropdown extends StatelessWidget {
-
-  const CustomDropdown({super.key});
+  const CustomDropdown({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.items,
+    required this.onChanged,
+    this.validator,
+    this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
-
-    // final provider =
-    //     Provider.of<RegisterProvider>(context);
-
     return Column(
       crossAxisAlignment:
           CrossAxisAlignment.start,
       children: [
-
-        const Text(
-          "Enter level of Education",
-          style: TextStyle(fontSize: 12),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+          ),
         ),
 
-        const SizedBox(height: 5),
+        const SizedBox(height: 6),
 
-        Container(
-          padding:
-              const EdgeInsets.symmetric(
-            horizontal: 12,
-          ),
+        DropdownButtonFormField<T>(
+          value: value,
+          items: items,
+          onChanged: onChanged,
+          validator: validator,
 
-          decoration: BoxDecoration(
-            color: Colors.grey.shade300,
-            borderRadius:
-                BorderRadius.circular(5),
-          ),
+          decoration: InputDecoration(
+            prefixIcon:
+                icon != null ? Icon(icon) : null,
 
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-             // value: provider.education,
-              isExpanded: true,
+            filled: true,
+            fillColor: Colors.grey.shade300,
 
-              items:[],
-              //     provider.educationList.map((e) {
+            border: OutlineInputBorder(
+              borderRadius:
+                  BorderRadius.circular(8),
+            ),
 
-              //   return DropdownMenuItem(
-              //     value: e,
-              //     child: Text(e),
-              //   );
-              // }).toList(),
+            enabledBorder: OutlineInputBorder(
+              borderRadius:
+                  BorderRadius.circular(8),
+            ),
 
-              onChanged: (value) {
-
-                // provider.changeEducation(
-                //   value!,
-                // );
-              },
+            focusedBorder: OutlineInputBorder(
+              borderRadius:
+                  BorderRadius.circular(8),
             ),
           ),
         ),

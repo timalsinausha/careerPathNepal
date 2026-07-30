@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'auth/provider/register_provider.dart';
 import 'core/navigation/navigation_service.dart';
 import 'core/network/dio_client.dart';
+import 'screens/profile_firststep.dart';
 
 void main() {
   DioClient.initialize();
@@ -44,7 +45,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SplashScreen(),
+      home:
+      //ProfileFirstStep(),
+       SplashScreen(),
     );
   }
 }
