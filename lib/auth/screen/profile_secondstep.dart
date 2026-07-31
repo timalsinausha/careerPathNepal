@@ -3,11 +3,11 @@ import 'package:careernepal/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../auth/model/update_profile_request.dart';
-import '../auth/provider/profile_provider.dart';
-import '../core/constants/budget_constants.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/custom_dropdown.dart';
+import '../model/update_profile_request.dart';
+import '../provider/profile_provider.dart';
+import '../../core/constants/budget_constants.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/custom_dropdown.dart';
 
 class ProfileSecondStep extends StatefulWidget {
   const ProfileSecondStep({super.key});

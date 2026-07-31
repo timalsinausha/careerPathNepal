@@ -1,18 +1,18 @@
 import 'package:careernepal/auth/provider/login_provider.dart';
 import 'package:careernepal/core/snackar_bar.dart';
 import 'package:careernepal/core/validators.dart';
-import 'package:careernepal/screens/profile_firststep.dart';
+import 'package:careernepal/auth/screen/profile_firststep.dart';
 import 'package:careernepal/screens/home_screen.dart';
-import 'package:careernepal/screens/profile_screen.dart';
-import 'package:careernepal/screens/register_screen.dart';
+import 'package:careernepal/auth/screen/profile_screen.dart';
+import 'package:careernepal/auth/screen/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../auth/provider/profile_provider.dart';
-import '../auth/service/auth_storage_service.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/custom_text.dart';
-import '../widgets/custom_textfield.dart';
+import '../provider/profile_provider.dart';
+import '../service/auth_storage_service.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/custom_text.dart';
+import '../../widgets/custom_textfield.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

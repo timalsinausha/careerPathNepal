@@ -1,15 +1,15 @@
 import 'package:careernepal/core/snackar_bar.dart';
 import 'package:careernepal/core/validators.dart';
 import 'package:careernepal/screens/home_screen.dart';
-import 'package:careernepal/screens/login_screen.dart';
+import 'package:careernepal/auth/screen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../auth/model/register_request.dart';
-import '../auth/provider/register_provider.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/custom_text.dart';
-import '../widgets/custom_textfield.dart';
+import '../model/register_request.dart';
+import '../provider/register_provider.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/custom_text.dart';
+import '../../widgets/custom_textfield.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

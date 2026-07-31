@@ -1,18 +1,22 @@
+import 'package:careernepal/assessment/screen/assement_intro_screen.dart';
 import 'package:careernepal/screens/college_screen.dart';
 import 'package:careernepal/screens/course_screen.dart';
-import 'package:careernepal/screens/login_screen.dart';
+import 'package:careernepal/auth/screen/login_screen.dart';
 import 'package:careernepal/screens/quiz_screen.dart';
+import 'package:careernepal/widgets/result_progress_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../auth/provider/auth_provider.dart';
 import '../core/dialogs/confirmation_dialog.dart';
+import '../widgets/result_category_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
     appBar:   AppBar(
         title: const Text("Home"),
@@ -125,6 +129,12 @@ class HomeScreen extends StatelessWidget {
                           const SizedBox(height: 12),
                           ElevatedButton(
                             onPressed: () {
+//                                Navigator.push(
+//   context,
+//   MaterialPageRoute(
+//     builder: (_) => const AssessmentIntroScreen(),
+//   ),
+// );
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -149,11 +159,17 @@ class HomeScreen extends StatelessWidget {
                     IconButton(
                       onPressed: () {
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const QuizScreen(),
-                          ),
-                        );
+  context,
+  MaterialPageRoute(
+    builder: (_) => const AssessmentIntroScreen(),
+  ),
+);
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const QuizScreen(),
+                        //   ),
+                        // );
                       },
                       icon: const Icon(
                         Icons.quiz,
@@ -185,12 +201,18 @@ class HomeScreen extends StatelessWidget {
                       icon: Icons.quiz,
                       title: "Quiz",
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const QuizScreen(),
-                          ),
-                        );
+                         Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (_) => const AssessmentIntroScreen(),
+  ),
+);
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (_) => const QuizScreen(),
+                        //   ),
+                        // );
                       },
                     ),
                   ),
@@ -200,12 +222,21 @@ class HomeScreen extends StatelessWidget {
                       icon: Icons.school,
                       title: "Courses",
                       onTap: () {
-                        Navigator.push(
+                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => const CourseScreen(),
+                            builder: (_) => const ResultProgressTile(
+                              attribute: "Result",
+                              percentage: 33,
+                            ),
                           ),
                         );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (_) => const CourseScreen(),
+                        //   ),
+                        // );
                       },
                     ),
                   ),
@@ -228,7 +259,10 @@ class HomeScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 24),
-
+ResultProgressTile(
+                              attribute: "Result",
+                              percentage: 90,
+                            ),
               /// CAREERS
               const Text(
                 "Recommended Careers",

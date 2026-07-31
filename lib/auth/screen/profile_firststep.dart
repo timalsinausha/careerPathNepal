@@ -1,13 +1,13 @@
 import 'package:careernepal/screens/home_screen.dart';
-import 'package:careernepal/screens/profile_secondstep.dart';
+import 'package:careernepal/auth/screen/profile_secondstep.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_dropdown.dart';
-import '../../widgets/custom_textfield.dart';
-import '../auth/model/education_level.dart';
-import '../auth/provider/profile_provider.dart';
+import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_dropdown.dart';
+import '../../../widgets/custom_textfield.dart';
+import '../model/education_level.dart';
+import '../provider/profile_provider.dart';
 
 
 class ProfileFirstStep extends StatefulWidget {

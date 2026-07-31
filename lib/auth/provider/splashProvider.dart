@@ -1,9 +1,9 @@
 import 'package:careernepal/auth/provider/auth_provider.dart';
 import 'package:careernepal/screens/home_screen.dart';
-import 'package:careernepal/screens/login_screen.dart';
+import 'package:careernepal/auth/screen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../screens/onboarding_screen.dart';
+import '../screen/onboarding_screen.dart';
 import '../service/onboarding_storage.dart';
 class SplashProvider extends ChangeNotifier {
 

@@ -7,11 +7,19 @@ class ApiConstants{
   static const String profile = "/profile/";
   static const String updateProfile =  "/student-profile/update/";
    // Locations
-  static const String provinces =
-      "/locations/provinces/";
+  static const String provinces = "/locations/provinces/";
+  static const String districts = "/locations/districts/";
 
-  static const String districts =
-      "/locations/districts/";
+  //assessment
+  static const String startAssessment = "/assessment/start/";
+  static const String questions = "/assessment/questions/";
+  static const String submitAnswer = "/assessment/answer/";
+  static const String assessmentProgress = "/assessment/progress/";
+  static const completeAssessment = "/assessment/complete/";
+  static const assessmentResult ="/assessment/result/";
+
+  //career
+  static const String careerRecommendations = "/careers/recommendations/";
 }
 
 //http://10.0.2.2:8000/api  for android emulator

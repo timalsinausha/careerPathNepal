@@ -1,6 +1,8 @@
 import 'package:careernepal/data/quiz_question.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../assessment/provider/assessment_provider.dart';
 import '../widgets/custom_button.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -11,6 +13,25 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+  @override
+void initState() {
+  super.initState();
+
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    loadResult();
+  });
+}
+
+void loadResult() async {
+
+  final provider =
+      context.read<AssessmentProvider>();
+
+  final response =
+      await provider.getAssessmentResult(7);
+
+  print(response.attemptId);
+}
   int currentQuestion = 0;
   String? selectedOption;
 

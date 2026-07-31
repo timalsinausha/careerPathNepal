@@ -8,7 +8,7 @@ import 'providers/bottom_nav_provider.dart';
 
 import 'screens/quiz_screen.dart';
 
-import 'screens/profile_screen.dart';
+import 'auth/screen/profile_screen.dart';
 
 import 'widgets/custom_bottom_nav.dart';
 

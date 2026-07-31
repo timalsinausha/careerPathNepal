@@ -1,11 +1,11 @@
-import 'package:careernepal/screens/login_screen.dart';
+import 'package:careernepal/auth/screen/login_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../auth/onboarding_model.dart';
-import '../auth/service/onboarding_storage.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/onboarding_page.dart';
-import '../widgets/page_indicator.dart';
+import '../model/onboarding_model.dart';
+import '../service/onboarding_storage.dart';
+import '../../widgets/custom_button.dart';
+import '../../widgets/onboarding_page.dart';
+import '../../widgets/page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
