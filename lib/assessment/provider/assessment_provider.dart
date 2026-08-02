@@ -1,8 +1,9 @@
 import 'package:careernepal/assessment/models/assessment_questions.dart';
 import 'package:careernepal/assessment/models/complete_assessment_request.dart';
 import 'package:flutter/material.dart';
+import '../models/assement_status_model.dart';
 import '../models/assessment_questions_resonse.dart';
-import '../models/complete_assessment_response.dart';
+import '../models/assessment_result_response.dart';
 import '../models/submit_answer_request.dart';
 import '../service/assessment_api_service.dart';
 import '../service/result_api_service.dart';
@@ -16,6 +17,8 @@ class AssessmentProvider
   final ResultApiService _resultApiService =
     ResultApiService();
   bool _isLoading = false;
+  AssessmentStatusModel? assessmentStatus;
+  bool isCheckingStatus = false;
 
   bool get isLoading => _isLoading;
 
@@ -32,6 +35,7 @@ int get currentQuestionIndex =>  _currentQuestionIndex;
 AssessmentQuestion get currentQuestion =>  _questions[_currentQuestionIndex];
 
 Map<int, int> selectedAnswers = {};
+
 
 int? selectedOptionForCurrentQuestion() {
 
@@ -191,7 +195,7 @@ Future<void> loadProgress() async {
   notifyListeners();
 }
 
-Future<CompleteAssessmentResponse>
+Future<AssessmentResultResponse>
 completeAssessment() async {
 
   return await _api.completeAssessment(
@@ -206,14 +210,34 @@ completeAssessment() async {
 
 }
 
-Future<CompleteAssessmentResponse> getAssessmentResult(
-    int attemptId,
-) async {
+Future<AssessmentResultResponse> getAssessmentResult() async {
 
-  return await _resultApiService.getResult(
-    attemptId,
-  );
+  return await _resultApiService.getResult();
 
 }
+
+Future<void> getAssessmentStatus() async {
+
+  isCheckingStatus = true;
+  notifyListeners();
+
+  try {
+
+    assessmentStatus =
+        await AssessmentApiService()
+            .getAssessmentStatus();
+
+  } catch (e) {
+
+    debugPrint(e.toString());
+
+  }
+
+  isCheckingStatus = false;
+  notifyListeners();
+
+}
+
+
 
 }

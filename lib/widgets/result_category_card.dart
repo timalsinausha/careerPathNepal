@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../assessment/models/complete_assessment_response.dart';
+import '../assessment/models/assessment_result_response.dart';
 import 'result_progress_tile.dart';
 
 class ResultCategoryCard extends StatelessWidget {

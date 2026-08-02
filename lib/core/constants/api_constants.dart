@@ -17,9 +17,11 @@ class ApiConstants{
   static const String assessmentProgress = "/assessment/progress/";
   static const completeAssessment = "/assessment/complete/";
   static const assessmentResult ="/assessment/result/";
+  static const String assessmentStatus = "/assessment/status/";
 
   //career
   static const String careerRecommendations = "/careers/recommendations/";
+  static const String careers = "/careers/";
 }
 
 //http://10.0.2.2:8000/api  for android emulator

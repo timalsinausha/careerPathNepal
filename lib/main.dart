@@ -9,9 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'assessment/provider/assessment_provider.dart';
 import 'auth/provider/register_provider.dart';
+import 'careers/providers/career_provider.dart';
+import 'careers/providers/recommendation_provider.dart';
 import 'core/navigation/navigation_service.dart';
 import 'core/network/dio_client.dart';
-
 
 void main() {
   DioClient.initialize();
@@ -26,6 +27,8 @@ void main() {
         ChangeNotifierProvider(create: (_) => BottomNavProvider()),
         Provider(create: (_) => AuthProvider(),),
         ChangeNotifierProvider(create: (_) => AssessmentProvider(),),
+         ChangeNotifierProvider(create: (_) => RecommendationProvider()),
+         ChangeNotifierProvider(create: (_) => CareerProvider(),),
       ],
       child: const MyApp(),
     ),
@@ -46,7 +49,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SplashScreen(),
+      home:
+      //ResultCheck(),
+      const SplashScreen(),
     );
   }
 }

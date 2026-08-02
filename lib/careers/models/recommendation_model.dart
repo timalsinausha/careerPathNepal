@@ -77,6 +77,7 @@ class RecommendationModel {
   final int id;
   final CareerModel career;
   final double matchScore;
+  final double displayMatchScore;
   final bool eligible;
   final String minimumEducationLevel;
   final String nextStep;
@@ -88,6 +89,7 @@ class RecommendationModel {
     required this.id,
     required this.career,
     required this.matchScore,
+    required this.displayMatchScore,
     required this.eligible,
     required this.minimumEducationLevel,
     required this.nextStep,
@@ -105,8 +107,11 @@ class RecommendationModel {
         json["career"],
       ),
 
-      matchScore:
-          (json["match_score"] as num).toDouble(),
+      matchScore: double.tryParse(
+  json["match_score"].toString(),
+) ?? 0.0,
+displayMatchScore:
+    double.parse(json["display_match_score"].toString()),
 
       eligible: json["eligible"],
 

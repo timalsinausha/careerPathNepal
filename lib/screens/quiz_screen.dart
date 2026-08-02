@@ -16,7 +16,7 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
 void initState() {
   super.initState();
-
+print("result getting");
   WidgetsBinding.instance.addPostFrameCallback((_) {
     loadResult();
   });
@@ -24,20 +24,46 @@ void initState() {
 
 void loadResult() async {
 
-  final provider =
-      context.read<AssessmentProvider>();
+  try {
 
-  final response =
-      await provider.getAssessmentResult(7);
+    print("Loading result...");
 
-  print(response.attemptId);
+    final provider = context.read<AssessmentProvider>();
+
+    final response = await provider.getAssessmentResult();
+
+    print(response.hasResult);
+print(response.attemptId);
+print(response.completedAt);
+
+print(response.results?.keys);
+
+print(response.results?["interest"]);
+print(response.results?["trait"]);
+print(response.results?["work_style"]);
+print(response.results?["value"]);
+print(response.results?["aptitude"]);
+for (final result in response.results!["interest"]!) {
+  print(
+    "${result.attribute} | ${result.score} | ${result.percentage}",
+  );
+}
+
+  } catch (e, s) {
+
+    print(e);
+    print(s);
+
+  }
 }
   int currentQuestion = 0;
   String? selectedOption;
 
   @override
   Widget build(BuildContext context) {
-    final question = questions[currentQuestion];
+    print("QuizScreen build");
+
+  final question = questions[currentQuestion];
 
     return Scaffold(
       backgroundColor: Colors.white,

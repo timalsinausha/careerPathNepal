@@ -1,10 +1,11 @@
+import 'package:careernepal/assessment/models/assessment_result_response.dart';
 import 'package:careernepal/assessment/models/start_assement_response.dart';
 
 import '../../core/constants/api_constants.dart';
 import '../../core/network/dio_client.dart';
+import '../models/assement_status_model.dart';
 import '../models/assessment_questions_resonse.dart';
 import '../models/complete_assessment_request.dart';
-import '../models/complete_assessment_response.dart';
 import '../models/progress_response.dart';
 import '../models/submit_answer_request.dart';
 
@@ -62,7 +63,7 @@ Future<ProgressResponse> getProgress(
       response.data);
 }
 
-Future<CompleteAssessmentResponse>
+Future<AssessmentResultResponse>
 completeAssessment(
     CompleteAssessmentRequest request,
 ) async {
@@ -76,8 +77,21 @@ completeAssessment(
 
   );
 
-  return CompleteAssessmentResponse.fromJson(
+  return AssessmentResultResponse.fromJson(
       response.data);
+}
+
+Future<AssessmentStatusModel>
+    getAssessmentStatus() async {
+
+  final response =
+      await DioClient.dio.get(
+    ApiConstants.assessmentStatus,
+  );
+
+  return AssessmentStatusModel.fromJson(
+    response.data,
+  );
 }
 
 }

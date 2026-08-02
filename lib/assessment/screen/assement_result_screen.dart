@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../careers/services/recommendation_api_services.dart';
-import '../models/complete_assessment_response.dart';
+import '../../careers/providers/recommendation_provider.dart';
+import '../../careers/screens/career_details_screen.dart';
+import '../models/assessment_result_response.dart';
 import '../provider/assessment_provider.dart';
+import 'assement_intro_screen.dart';
 
 
 class AssessmentResultScreen extends StatefulWidget {
 
-  final CompleteAssessmentResponse response;
+  final AssessmentResultResponse? response;
 
   const AssessmentResultScreen({
     super.key,
-    required this.response,
+     this.response,
   });
 
   @override
@@ -20,26 +21,89 @@ class AssessmentResultScreen extends StatefulWidget {
 }
 
 class _AssessmentResultScreenState extends State<AssessmentResultScreen> {
-  @override
+@override
 void initState() {
   super.initState();
-  loadResult();
+
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+    if (!mounted) return;
+
+    final assessmentProvider =
+        context.read<AssessmentProvider>();
+
+    await assessmentProvider.getAssessmentStatus();
+
+    if (!mounted) return;
+
+    final status = assessmentProvider.assessmentStatus;
+
+    if (status == null) {
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
+
+    if (!status.hasAttempt) {
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
+
+    if (!status.isCompleted) {
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
+
+    // Assessment completed
+    if (widget.response != null) {
+      result = widget.response;
+
+      setState(() {
+        isLoading = false;
+      });
+
+      await context
+          .read<RecommendationProvider>()
+          .loadRecommendations();
+    } else {
+      await loadLatestResult();
+    }
+  });
 }
-void loadResult() async {
+AssessmentResultResponse? result;
 
-  final provider = context.read<AssessmentProvider>();
+bool isLoading = true;
 
-  final response =
-      await provider.getAssessmentResult(7);
+Future<void> loadLatestResult() async {
+  final assessmentProvider =
+      context.read<AssessmentProvider>();
 
-  print(response.attemptId);
+  final recommendationProvider =
+      context.read<RecommendationProvider>();
+
+  final latestResult =
+      await assessmentProvider.getAssessmentResult();
+
+  if (!mounted) return;
+
+  setState(() {
+    result = latestResult;
+    isLoading = false;
+  });
+  
+
+  await recommendationProvider.loadRecommendations();
 }
 
 List<AssessmentResult> getTopStrengths() {
 
   final List<AssessmentResult> allResults = [];
 
-  widget.response.results.values.forEach((list) {
+  result!.results!.values.forEach((list) {
     allResults.addAll(list);
   });
 
@@ -54,7 +118,7 @@ double getOverallPercentage() {
 
     final List<AssessmentResult> allResults = [];
 
-    widget.response.results.values.forEach((list) {
+    result!.results!.values.forEach((list) {
       allResults.addAll(list);
     });
 
@@ -75,7 +139,141 @@ double getOverallPercentage() {
 
 @override
 Widget build(BuildContext context) {
+    final assessmentProvider =
+    context.watch<AssessmentProvider>();
+
+  if (assessmentProvider.isCheckingStatus) {
+  return const Scaffold(
+    body: Center(
+      child: CircularProgressIndicator(),
+    ),
+  );
+}
+
+  
+final status = assessmentProvider.assessmentStatus;
+if (status != null && !status.hasAttempt) {
+return Scaffold(
+backgroundColor: const Color(0xffF5F7FB),
+appBar: AppBar(
+title: const Text(
+"Assessment Result"
+),
+),
+        body: Center(
+            child: Padding(
+            padding: const EdgeInsets.all(25),
+            child: Column(
+            mainAxisAlignment:
+            MainAxisAlignment.center,
+            children: [
+            Icon(
+            Icons.assignment_outlined,
+            size: 90,
+            color: Colors.blueGrey,
+            ),
+            const SizedBox(height:20),
+            const Text(
+                "You haven't taken the assessment yet",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                fontSize:22,
+                fontWeight: FontWeight.bold,
+            ),
+            ),
+            const SizedBox(height:12),
+            const Text(
+            "Complete your career assessment to discover your strengths and recommended career paths.",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+            fontSize:16,
+            color: Colors.grey,
+            ),
+            ),
+            const SizedBox(height:30),
+
+            ElevatedButton(
+            onPressed: (){
+
+                                                 Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (_) => const AssessmentIntroScreen(),
+  ),
+);
+
+            },
+            child: const Text(
+            "Take Assessment"
+            ),
+            )
+   ],
+  ),
+  ),
+  ),
+ );
+}
+if (status != null &&
+    status.hasAttempt &&
+    !status.isCompleted) {
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text(
+          "Assessment Result"),
+    ),
+    body: Center(
+      child: Padding(
+        padding:
+            const EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment:
+              MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.pending_actions,
+              size: 90,
+              color: Colors.orange,
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              "Assessment In Progress",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight:
+                    FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              "You have an unfinished assessment. Continue where you left off.",
+              textAlign:
+                  TextAlign.center,
+            ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: () {
+
+                                        Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (_) => const AssessmentIntroScreen(),
+  ),
+);
+
+              },
+
+              child: const Text(
+                  "Continue Assessment"),
+            )
+          ],
+        ),
+      ),
+    ),
+  );
+}
 final topStrengths = getTopStrengths();
+final recommendationProvider =
+    context.watch<RecommendationProvider>();
   return Scaffold(
  backgroundColor: const Color(0xffF5F7FB),
     appBar: AppBar(
@@ -270,40 +468,92 @@ final topStrengths = getTopStrengths();
             medal: "🥉",
             result: topStrengths[2],
           ),
+const SizedBox(height: 24),
 
-const SizedBox(height: 30),
+const Padding(
+  padding: EdgeInsets.symmetric(horizontal: 16),
+  child: Align(
+    alignment: Alignment.centerLeft,
+    child: Text(
+      "Recommended Careers",
+      style: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+  ),
+),
 
-          const SizedBox(height: 20),
+const SizedBox(height: 12),
 
-          ResultSection(
-            title: "Interest",
-            results:
-                widget.response.results["interest"] ?? [],
+if (recommendationProvider.isLoading)
+  const Center(
+    child: CircularProgressIndicator(),
+  )
+else if (recommendationProvider.recommendations.isEmpty)
+  const Padding(
+    padding: EdgeInsets.all(16),
+    child: Text("No career recommendations available."),
+  )
+else
+  ...recommendationProvider.recommendations
+      .take(5)
+      .map(
+        (career) => Card(
+          margin: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
           ),
-
-          ResultSection(
-            title: "Traits",
-            results:
-                widget.response.results["trait"] ?? [],
+          child: ListTile(
+            title: Text(career.career.name),
+            subtitle: Text(
+              "${career.displayMatchScore.toStringAsFixed(0)}% Match",
+            ),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () {
+                                            Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (_) =>  CareerDetailScreen(
+  slug: career.career.slug,
+  matchScore: career.displayMatchScore,
+)
+  ),
+);     
+            },
           ),
+        ),
+      ),
 
-          ResultSection(
-            title: "Work Style",
-            results:
-                widget.response.results["work_style"] ?? [],
-          ),
+          // ResultSection(
+          //   title: "Interest",
+          //   results:
+          //       result!.results!["interest"] ?? [],
+          // ),
 
-          ResultSection(
-            title: "Values",
-            results:
-                widget.response.results["value"] ?? [],
-          ),
+          // ResultSection(
+          //   title: "Traits",
+          //   results:
+          //       result!.results!["trait"] ?? [],
+          // ),
 
-          ResultSection(
-            title: "Aptitude",
-            results:
-                widget.response.results["aptitude"] ?? [],
-          ),
+          // ResultSection(
+          //   title: "Work Style",
+          //   results:
+          //       result!.results!["work_style"] ?? [],
+          // ),
+
+          // ResultSection(
+          //   title: "Values",
+          //   results:
+          //       result!.results!["value"] ?? [],
+          // ),
+
+          // ResultSection(
+          //   title: "Aptitude",
+          //   results:
+          //       result!.results!["aptitude"] ?? [],
+          // ),
 
           const SizedBox(height: 30),
 

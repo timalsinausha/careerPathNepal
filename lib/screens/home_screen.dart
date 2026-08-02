@@ -7,9 +7,10 @@ import 'package:careernepal/widgets/result_progress_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../assessment/screen/assement_result_screen.dart';
 import '../auth/provider/auth_provider.dart';
 import '../core/dialogs/confirmation_dialog.dart';
-import '../widgets/result_category_card.dart';
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -134,7 +135,8 @@ class HomeScreen extends StatelessWidget {
 //   MaterialPageRoute(
 //     builder: (_) => const AssessmentIntroScreen(),
 //   ),
-// );
+// );                         
+print("Going to QuizScreen");
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -199,20 +201,17 @@ class HomeScreen extends StatelessWidget {
                   Expanded(
                     child: _actionCard(
                       icon: Icons.quiz,
-                      title: "Quiz",
+                      title: "result",
                       onTap: () {
-                         Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (_) => const AssessmentIntroScreen(),
-  ),
-);
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (_) => const QuizScreen(),
-                        //   ),
-                        // );
+                        print("object");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const AssessmentResultScreen(
+                              response: null,
+                            ),
+                          ),
+                        );
                       },
                     ),
                   ),
