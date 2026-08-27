@@ -8,6 +8,7 @@ import 'package:careernepal/auth/screen/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../main_navigation_screen.dart';
 import '../provider/profile_provider.dart';
 import '../service/auth_storage_service.dart';
 import '../../widgets/custom_button.dart';
@@ -127,13 +128,19 @@ Widget build(BuildContext context) {
                           if (!context.mounted) return;
 
                           if (profile.studentProfile.isProfileCompleted) {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => const HomeScreen(),
-                              ),
-                              (route) => false,
-                            );
+                            Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const MainNavigationScreen(),
+                            ),
+                          );
+                            // Navigator.pushAndRemoveUntil(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (_) => const HomeScreen(),
+                            //   ),
+                            //   (route) => false,
+                            // );
                           } else {
                             Navigator.pushAndRemoveUntil(
                               context,

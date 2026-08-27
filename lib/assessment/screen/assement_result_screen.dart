@@ -98,8 +98,11 @@ Future<void> loadLatestResult() async {
 
   await recommendationProvider.loadRecommendations();
 }
-
 List<AssessmentResult> getTopStrengths() {
+
+  if (result == null || result!.results == null) {
+    return [];
+  }
 
   final List<AssessmentResult> allResults = [];
 
@@ -113,28 +116,64 @@ List<AssessmentResult> getTopStrengths() {
 
   return allResults.take(3).toList();
 }
+// List<AssessmentResult> getTopStrengths() {
 
+//   final List<AssessmentResult> allResults = [];
+
+//   result!.results!.values.forEach((list) {
+//     allResults.addAll(list);
+//   });
+
+//   allResults.sort(
+//     (a, b) => b.percentage.compareTo(a.percentage),
+//   );
+
+//   return allResults.take(3).toList();
+// }
 double getOverallPercentage() {
 
-    final List<AssessmentResult> allResults = [];
+  if (result == null || result!.results == null) {
+    return 0;
+  }
 
-    result!.results!.values.forEach((list) {
-      allResults.addAll(list);
-    });
+  final List<AssessmentResult> allResults = [];
 
-    if (allResults.isEmpty) {
-      return 0;
-    }
+  result!.results!.values.forEach((list) {
+    allResults.addAll(list);
+  });
 
-    final total = allResults.fold<double>(
-      0,
-      (sum, item) => sum + item.percentage,
-    );
+  if (allResults.isEmpty) {
+    return 0;
+  }
 
-    return total / allResults.length;
+  final total = allResults.fold<double>(
+    0,
+    (sum, item) => sum + item.percentage,
+  );
+
+  return total / allResults.length;
+}
+// double getOverallPercentage() {
+
+//     final List<AssessmentResult> allResults = [];
+
+//     result!.results!.values.forEach((list) {
+//       allResults.addAll(list);
+//     });
+
+//     if (allResults.isEmpty) {
+//       return 0;
+//     }
+
+//     final total = allResults.fold<double>(
+//       0,
+//       (sum, item) => sum + item.percentage,
+//     );
+
+//     return total / allResults.length;
 
     
-  }
+//   }
 
 
 @override
@@ -453,21 +492,38 @@ final recommendationProvider =
           ),
 
           const SizedBox(height: 16),
+          if (topStrengths.isNotEmpty)
+  StrengthCard(
+    medal: "🥇",
+    result: topStrengths[0],
+  ),
 
-          StrengthCard(
-            medal: "🥇",
-            result: topStrengths[0],
-          ),
+if (topStrengths.length > 1)
+  StrengthCard(
+    medal: "🥈",
+    result: topStrengths[1],
+  ),
 
-          StrengthCard(
-            medal: "🥈",
-            result: topStrengths[1],
-          ),
+if (topStrengths.length > 2)
+  StrengthCard(
+    medal: "🥉",
+    result: topStrengths[2],
+  ),
 
-          StrengthCard(
-            medal: "🥉",
-            result: topStrengths[2],
-          ),
+          // StrengthCard(
+          //   medal: "🥇",
+          //   result: topStrengths[0],
+          // ),
+
+          // StrengthCard(
+          //   medal: "🥈",
+          //   result: topStrengths[1],
+          // ),
+
+          // StrengthCard(
+          //   medal: "🥉",
+          //   result: topStrengths[2],
+          // ),
 const SizedBox(height: 24),
 
 const Padding(

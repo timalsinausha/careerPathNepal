@@ -24,12 +24,14 @@ class RecommendedCourse {
   final int id;
   final String name;
   final String shortName;
+  final String slug;
   final bool isPrimary;
 
   RecommendedCourse({
     required this.id,
     required this.name,
     required this.shortName,
+    required this.slug,
     required this.isPrimary,
   });
 
@@ -37,13 +39,38 @@ class RecommendedCourse {
     Map<String, dynamic> json,
   ) {
     return RecommendedCourse(
-      id: json["id"],
-      name: json["name"],
-      shortName: json["short_name"],
-      isPrimary: json["is_primary"],
+      id: json['id'],
+      name: json['name'] ?? '',
+      shortName: json['short_name'] ?? '',
+      slug: json['slug'] ?? '',
+      isPrimary: json['is_primary'] ?? false,
     );
   }
 }
+// class RecommendedCourse {
+//   final int id;
+//   final String name;
+//   final String shortName;
+//   final bool isPrimary;
+
+//   RecommendedCourse({
+//     required this.id,
+//     required this.name,
+//     required this.shortName,
+//     required this.isPrimary,
+//   });
+
+//   factory RecommendedCourse.fromJson(
+//     Map<String, dynamic> json,
+//   ) {
+//     return RecommendedCourse(
+//       id: json["id"],
+//       name: json["name"],
+//       shortName: json["short_name"],
+//       isPrimary: json["is_primary"],
+//     );
+//   }
+// }
 
 class RecommendedCollege {
   final int id;

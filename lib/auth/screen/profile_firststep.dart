@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_dropdown.dart';
 import '../../../widgets/custom_textfield.dart';
+import '../../main_navigation_screen.dart';
 import '../model/education_level.dart';
 import '../provider/profile_provider.dart';
 
@@ -366,13 +367,19 @@ class _ProfileFirstStepState
                             ),
       
                             onPressed: () {
-                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) =>
-                                        const HomeScreen(),
-                                  ),
-                                );
+                              Navigator.pushReplacement(
+  context,
+  MaterialPageRoute(
+    builder: (_) => const MainNavigationScreen(),
+  ),
+);
+                              //  Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder: (_) =>
+                              //           const HomeScreen(),
+                              //     ),
+                              //   );
                              
                             },
       

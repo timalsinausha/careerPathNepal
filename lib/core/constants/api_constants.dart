@@ -22,6 +22,8 @@ class ApiConstants{
   //career
   static const String careerRecommendations = "/careers/recommendations/";
   static const String careers = "/careers/";
+  //course
+  static const String courseDetail = "/courses/";
 }
 
 //http://10.0.2.2:8000/api  for android emulator

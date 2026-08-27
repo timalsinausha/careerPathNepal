@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../course/screen/course_details_screen.dart';
 import '../providers/career_provider.dart';
 
 class CareerDetailScreen extends StatefulWidget {
@@ -187,15 +188,54 @@ class _CareerDetailScreenState
 
             const SizedBox(height: 12),
 
+            // ...career.recommendedCourses.map(
+            //   (course) => Card(
+            //     child: ListTile(
+            //       leading: const Icon(Icons.book),
+            //       title: Text(course.name),
+            //       subtitle: Text(course.shortName),
+            //     ),
+            //   ),
+            // ),
+
             ...career.recommendedCourses.map(
-              (course) => Card(
-                child: ListTile(
-                  leading: const Icon(Icons.book),
-                  title: Text(course.name),
-                  subtitle: Text(course.shortName),
-                ),
-              ),
+  (course) => Card(
+    margin: const EdgeInsets.symmetric(
+      vertical: 6,
+    ),
+    child: ListTile(
+      leading: const Icon(
+        Icons.book,
+      ),
+
+      title: Text(
+        course.name,
+      ),
+
+      subtitle: Text(
+        course.shortName,
+      ),
+
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        size: 18,
+      ),
+
+      onTap: () {
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) =>
+                CourseDetailScreen(
+              slug: course.slug,
             ),
+          ),
+        );
+      },
+    ),
+  ),
+),
 
             const SizedBox(height: 24),
 

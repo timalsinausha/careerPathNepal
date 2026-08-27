@@ -13,6 +13,7 @@ import 'careers/providers/career_provider.dart';
 import 'careers/providers/recommendation_provider.dart';
 import 'core/navigation/navigation_service.dart';
 import 'core/network/dio_client.dart';
+import 'course/provider/course_provider.dart';
 
 void main() {
   DioClient.initialize();
@@ -24,11 +25,12 @@ void main() {
         ChangeNotifierProvider(create: (_) => LoginProvider()),
         ChangeNotifierProvider(create: (_) => RegisterProvider()),
         ChangeNotifierProvider(create: (_) => CareerResultProvider()),
-        ChangeNotifierProvider(create: (_) => BottomNavProvider()),
+         ChangeNotifierProvider(create: (_) => BottomNavProvider(),),
         Provider(create: (_) => AuthProvider(),),
         ChangeNotifierProvider(create: (_) => AssessmentProvider(),),
          ChangeNotifierProvider(create: (_) => RecommendationProvider()),
          ChangeNotifierProvider(create: (_) => CareerProvider(),),
+         ChangeNotifierProvider(create: (_) => CourseProvider(),),
       ],
       child: const MyApp(),
     ),

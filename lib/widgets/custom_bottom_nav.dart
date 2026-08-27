@@ -8,10 +8,11 @@ class CustomBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.watch<BottomNavProvider>();
+    final provider =
+        context.watch<BottomNavProvider>();
 
     return Container(
-      height: 70,
+      height: 75,
       decoration: const BoxDecoration(
         color: Colors.white,
         border: Border(
@@ -21,31 +22,47 @@ class CustomBottomNav extends StatelessWidget {
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment:
+            MainAxisAlignment.spaceAround,
         children: [
+
           _navItem(
             context,
             icon: Icons.home_outlined,
+            activeIcon: Icons.home,
+            label: "Home",
             index: 0,
           ),
+
           _navItem(
             context,
             icon: Icons.quiz_outlined,
+            activeIcon: Icons.quiz,
+            label: "Assessment",
             index: 1,
           ),
+
           _navItem(
             context,
-            icon: Icons.school_outlined,
+            icon: Icons.work_outline,
+            activeIcon: Icons.work,
+            label: "Results",
             index: 2,
           ),
+
           _navItem(
             context,
             icon: Icons.person_outline,
+            activeIcon: Icons.person,
+            label: "Profile",
             index: 3,
           ),
+
           _navItem(
             context,
             icon: Icons.settings_outlined,
+            activeIcon: Icons.settings,
+            label: "Settings",
             index: 4,
           ),
         ],
@@ -56,9 +73,12 @@ class CustomBottomNav extends StatelessWidget {
   Widget _navItem(
     BuildContext context, {
     required IconData icon,
+    required IconData activeIcon,
+    required String label,
     required int index,
   }) {
-    final provider = context.watch<BottomNavProvider>();
+    final provider =
+        context.watch<BottomNavProvider>();
 
     final isSelected =
         provider.currentIndex == index;
@@ -67,12 +87,40 @@ class CustomBottomNav extends StatelessWidget {
       onTap: () {
         provider.changeIndex(index);
       },
-      child: Icon(
-        icon,
-        size: 28,
-        color: isSelected
-            ? const Color(0xff274CFF)
-            : Colors.grey,
+
+      child: SizedBox(
+        width: 70,
+        child: Column(
+          mainAxisAlignment:
+              MainAxisAlignment.center,
+          children: [
+
+            Icon(
+              isSelected
+                  ? activeIcon
+                  : icon,
+              size: 25,
+              color: isSelected
+                  ? const Color(0xff274CFF)
+                  : Colors.grey,
+            ),
+
+            const SizedBox(height: 4),
+
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: isSelected
+                    ? FontWeight.w600
+                    : FontWeight.normal,
+                color: isSelected
+                    ? const Color(0xff274CFF)
+                    : Colors.grey,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
