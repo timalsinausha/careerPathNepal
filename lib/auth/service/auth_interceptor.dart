@@ -1,7 +1,7 @@
 import 'package:careernepal/auth/service/auth_storage_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import '../../core/navigation/navigation_service.dart';
+import '../../navigation/widget/navigation_service.dart';
 import '../screen/login_screen.dart';
 import 'auth_api_service.dart';
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../college/screen/college_details_screen.dart';
 import '../../course/screen/course_details_screen.dart';
 import '../providers/career_provider.dart';
 
@@ -32,6 +33,7 @@ class _CareerDetailScreenState
           .loadCareer(widget.slug);
     });
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -247,17 +249,58 @@ class _CareerDetailScreenState
               ),
             ),
 
+            // const SizedBox(height: 12),
+
+            // ...career.topColleges.map(
+            //   (college) => Card(
+            //     child: ListTile(
+            //       leading:
+            //           const Icon(Icons.school),
+            //       title: Text(college.name),
+            //       subtitle: Text(
+            //         "${college.district}, ${college.province}",
+            //       ),
+            //     ),
+            //   ),
+            // ),
             const SizedBox(height: 12),
 
             ...career.topColleges.map(
               (college) => Card(
+                margin: const EdgeInsets.symmetric(vertical: 6),
                 child: ListTile(
-                  leading:
-                      const Icon(Icons.school),
-                  title: Text(college.name),
+                  leading: const Icon(
+                    Icons.school,
+                    size: 30,
+                  ),
+
+                  title: Text(
+                    college.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+
                   subtitle: Text(
                     "${college.district}, ${college.province}",
                   ),
+
+                  trailing: const Icon(
+                    Icons.arrow_forward_ios,
+                    size: 18,
+                  ),
+
+                  onTap: () {
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => CollegeDetailScreen(
+                          slug: college.slug,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),

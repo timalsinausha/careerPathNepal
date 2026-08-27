@@ -1,17 +1,17 @@
 import 'package:careernepal/auth/provider/auth_provider.dart';
 import 'package:careernepal/auth/provider/splashProvider.dart';
-import 'package:careernepal/providers/bottom_nav_provider.dart';
-import 'package:careernepal/providers/career_result_provider.dart';
+import 'package:careernepal/navigation/providers/bottom_nav_provider.dart';
 import 'package:careernepal/auth/provider/login_provider.dart';
 import 'package:careernepal/auth/provider/profile_provider.dart';
-import 'package:careernepal/auth/screen/Splash_screen.dart';
+import 'package:careernepal/screens/Splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'assessment/provider/assessment_provider.dart';
 import 'auth/provider/register_provider.dart';
 import 'careers/providers/career_provider.dart';
 import 'careers/providers/recommendation_provider.dart';
-import 'core/navigation/navigation_service.dart';
+import 'college/provider/college_provider.dart';
+import 'navigation/widget/navigation_service.dart';
 import 'core/network/dio_client.dart';
 import 'course/provider/course_provider.dart';
 
@@ -24,13 +24,14 @@ void main() {
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(create: (_) => LoginProvider()),
         ChangeNotifierProvider(create: (_) => RegisterProvider()),
-        ChangeNotifierProvider(create: (_) => CareerResultProvider()),
+        // ChangeNotifierProvider(create: (_) => CareerResultProvider()),
          ChangeNotifierProvider(create: (_) => BottomNavProvider(),),
         Provider(create: (_) => AuthProvider(),),
         ChangeNotifierProvider(create: (_) => AssessmentProvider(),),
          ChangeNotifierProvider(create: (_) => RecommendationProvider()),
          ChangeNotifierProvider(create: (_) => CareerProvider(),),
          ChangeNotifierProvider(create: (_) => CourseProvider(),),
+          ChangeNotifierProvider( create: (_) => CollegeProvider(),),
       ],
       child: const MyApp(),
     ),

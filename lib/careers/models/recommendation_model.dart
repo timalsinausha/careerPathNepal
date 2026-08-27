@@ -75,6 +75,8 @@ class RecommendedCourse {
 class RecommendedCollege {
   final int id;
   final String name;
+  final String shortName;
+  final String slug;
   final String province;
   final String district;
   final String address;
@@ -82,6 +84,8 @@ class RecommendedCollege {
   RecommendedCollege({
     required this.id,
     required this.name,
+    required this.shortName,
+    required this.slug,
     required this.province,
     required this.district,
     required this.address,
@@ -91,14 +95,44 @@ class RecommendedCollege {
     Map<String, dynamic> json,
   ) {
     return RecommendedCollege(
-      id: json["id"],
-      name: json["name"],
-      province: json["province"],
-      district: json["district"],
-      address: json["address"],
+      id: json['id'],
+      name: json['name'] ?? '',
+      shortName: json['short_name'] ?? '',
+      slug: json['slug'] ?? '',
+      province: json['province'] ?? '',
+      district: json['district'] ?? '',
+      address: json['address'] ?? '',
     );
   }
 }
+
+// class RecommendedCollege {
+//   final int id;
+//   final String name;
+//   final String province;
+//   final String district;
+//   final String address;
+
+//   RecommendedCollege({
+//     required this.id,
+//     required this.name,
+//     required this.province,
+//     required this.district,
+//     required this.address,
+//   });
+
+//   factory RecommendedCollege.fromJson(
+//     Map<String, dynamic> json,
+//   ) {
+//     return RecommendedCollege(
+//       id: json["id"],
+//       name: json["name"],
+//       province: json["province"],
+//       district: json["district"],
+//       address: json["address"],
+//     );
+//   }
+// }
 
 class RecommendationModel {
   final int id;

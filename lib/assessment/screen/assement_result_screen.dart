@@ -543,6 +543,7 @@ const Padding(
 const SizedBox(height: 12),
 
 if (recommendationProvider.isLoading)
+
   const Center(
     child: CircularProgressIndicator(),
   )

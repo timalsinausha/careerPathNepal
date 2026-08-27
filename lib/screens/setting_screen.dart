@@ -1,4 +1,3 @@
-import 'package:careernepal/widgets/custom_setting_section_card.dart';
 import 'package:flutter/material.dart';
 
 
@@ -29,7 +28,7 @@ class SettingsScreen extends StatelessWidget {
           children: [
             SizedBox(height: 30),
 
-            CustomSettingSectionCard(),
+          
           ],
         ),
       ),

@@ -1,5 +1,5 @@
 import 'package:careernepal/auth/provider/auth_provider.dart';
-import 'package:careernepal/main_navigation_screen.dart';
+import 'package:careernepal/navigation/screen/main_navigation_screen.dart';
 import 'package:careernepal/screens/home_screen.dart';
 import 'package:careernepal/auth/screen/login_screen.dart';
 import 'package:flutter/material.dart';

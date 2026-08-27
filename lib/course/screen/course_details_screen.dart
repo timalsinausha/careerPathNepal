@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../college/screen/college_details_screen.dart';
 import '../provider/course_provider.dart';
 
 
@@ -266,7 +267,16 @@ print("Colleges: ${course.colleges.length}");
               ),
 
               onTap: () {
-                // College detail later
+                print("clicked");
+                print(college.slug);
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => CollegeDetailScreen(
+                    slug: college.slug,
+                  ),
+                ),
+              );
               },
             ),
           ),

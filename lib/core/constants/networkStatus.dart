@@ -1,1 +1,0 @@
-enum NetworkStatus{success,idle,error,loading}

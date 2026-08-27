@@ -8,7 +8,7 @@ import 'package:careernepal/auth/screen/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../main_navigation_screen.dart';
+import '../../navigation/screen/main_navigation_screen.dart';
 import '../provider/profile_provider.dart';
 import '../service/auth_storage_service.dart';
 import '../../widgets/custom_button.dart';
