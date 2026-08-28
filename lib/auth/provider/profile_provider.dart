@@ -15,6 +15,9 @@ class ProfileProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
+  String? _error;
+   String? get error => _error;
+
   List<ProvinceModel> _provinces = [];
   List<DistrictModel> _districts = [];
 

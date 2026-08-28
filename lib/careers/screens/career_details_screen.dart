@@ -7,12 +7,12 @@ import '../providers/career_provider.dart';
 
 class CareerDetailScreen extends StatefulWidget {
   final String slug;
-  final double matchScore;
+  final double? matchScore;
 
   const CareerDetailScreen({
     super.key,
     required this.slug,
-    required this.matchScore,
+     this.matchScore,
   });
 
   @override
@@ -96,7 +96,7 @@ class _CareerDetailScreenState
                 color: Colors.orange,
               ),
               label: Text(
-                "${widget.matchScore.toStringAsFixed(0)}% Match",
+                "${widget.matchScore?.toStringAsFixed(0)}% Match",
               ),
             ),
 

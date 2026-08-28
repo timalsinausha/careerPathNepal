@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../model/college_details_model.dart';
+import '../model/college_listmodel.dart';
 import '../service/college_api_service.dart';
 
 class CollegeProvider extends ChangeNotifier {
@@ -9,12 +10,14 @@ class CollegeProvider extends ChangeNotifier {
       CollegeApiService();
 
   CollegeDetailModel? _college;
+  List<CollegeListModel> _colleges = [];
 
   bool _isLoading = false;
 
   String? _error;
 
   CollegeDetailModel? get college => _college;
+  List<CollegeListModel> get colleges => _colleges;
 
   bool get isLoading => _isLoading;
 
@@ -33,6 +36,30 @@ class CollegeProvider extends ChangeNotifier {
 
       _college =
           await _api.getCollegeDetail(slug);
+
+    } catch (e) {
+
+      _error = e.toString();
+
+    } finally {
+
+      _isLoading = false;
+
+      notifyListeners();
+    }
+  }
+
+    // Load all colleges
+  Future<void> loadColleges() async {
+
+    _isLoading = true;
+    _error = null;
+
+    notifyListeners();
+
+    try {
+
+      _colleges = await _api.getColleges();
 
     } catch (e) {
 

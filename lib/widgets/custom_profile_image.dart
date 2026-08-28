@@ -44,16 +44,6 @@ class CustomProfileImage extends StatelessWidget {
             ),
           ],
         ),
-
-        const SizedBox(height: 15),
-
-        const Text(
-          "Sushmita Timalsina",
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
       ],
     );
   }
