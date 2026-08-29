@@ -6,6 +6,7 @@ class ApiConstants{
   static const String refreshToken = "/token/refresh/";
   static const String profile = "/profile/";
   static const String updateProfile =  "/student-profile/update/";
+  static const String updateduserProfile ="/updated-profile/";
    // Locations
   static const String provinces = "/locations/provinces/";
   static const String districts = "/locations/districts/";

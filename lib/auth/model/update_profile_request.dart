@@ -18,15 +18,43 @@ class UpdateProfileRequest {
   this.budgetRange,
 });
 
-  Map<String, dynamic> toJson() {
-    return {
-      "highest_education_level": highestEducationLevel,
-      "highest_education_institution":
-          highestEducationInstitution,
-      "academic_score": academicScore,
-      "province": provinceId,
-      "district": districtId,
-      "budget_range": budgetRange,
-    };
-  }
+
+Map<String, dynamic> toJson() {
+  final data = <String, dynamic>{
+    "highest_education_level":
+        highestEducationLevel,
+
+    "highest_education_institution":
+        highestEducationInstitution,
+
+    "academic_score":
+        academicScore,
+
+    "province":
+        provinceId,
+
+    "district":
+        districtId,
+
+    "budget_range":
+        budgetRange,
+  };
+
+  data.removeWhere(
+    (key, value) => value == null,
+  );
+
+  return data;
+}
+  // Map<String, dynamic> toJson() {
+  //   return {
+  //     "highest_education_level": highestEducationLevel,
+  //     "highest_education_institution":
+  //         highestEducationInstitution,
+  //     "academic_score": academicScore,
+  //     "province": provinceId,
+  //     "district": districtId,
+  //     "budget_range": budgetRange,
+  //   };
+  // }
 }

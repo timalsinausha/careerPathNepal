@@ -47,7 +47,7 @@ class ProfileApiService {
       throw Exception(_handleError(e));
     }
   }
-
+///it will save student details like budget, gpa etc
  Future<void> saveProfile(UpdateProfileRequest request) async {
   try {
      await _dio.patch(
@@ -75,4 +75,39 @@ class ProfileApiService {
 
     return "No Internet Connection.";
   }
+/// to  update contact, firstname and lastname
+Future<void> updateUserProfile({
+  String? firstName,
+  String? lastName,
+  String? contactNumber,
+}) async {
+  try {
+    print("UPDATE API: Sending request...");
+
+    final response = await DioClient.dio.patch(
+      ApiConstants.updateduserProfile,
+      data: {
+        if (firstName != null)
+          "first_name": firstName,
+
+        if (lastName != null)
+          "last_name": lastName,
+
+        if (contactNumber != null)
+          "contact_number": contactNumber,
+      },
+    );
+print(
+  "UPDATE API URL: ${ApiConstants.updateduserProfile}",
+);
+    print("UPDATE API STATUS: ${response.statusCode}");
+    print("UPDATE API DATA: ${response.data}");
+
+  } catch (e) {
+    print("UPDATE API ERROR: $e");
+    rethrow;
+  }
+}
+
+
 }

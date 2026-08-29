@@ -1,4 +1,5 @@
 import 'package:careernepal/core/snackar_bar.dart';
+import 'package:careernepal/navigation/screen/main_navigation_screen.dart';
 import 'package:careernepal/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,13 +27,37 @@ class _ProfileSecondStepState
   String? selectedBudget;
   
 
-  @override
+@override
 void initState() {
   super.initState();
 
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    context.read<ProfileProvider>().loadProvinces();
-  });
+  final provider =
+      context.read<ProfileProvider>();
+
+  // Load existing values
+  selectedProvince =
+      provider.draftProfile.provinceId;
+
+  selectedDistrict =
+      provider.draftProfile.districtId;
+
+  selectedBudget =
+      provider.draftProfile.budgetRange;
+
+  WidgetsBinding.instance.addPostFrameCallback(
+    (_) async {
+      // Load province list
+      await provider.loadProvinces();
+
+      // Load districts belonging to
+      // the existing province
+      if (selectedProvince != null) {
+        await provider.loadDistricts(
+          selectedProvince!,
+        );
+      }
+    },
+  );
 }
 
   @override
@@ -305,16 +330,28 @@ void initState() {
                               ),
                             ),
       
-                            onPressed: () {
-                            Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) =>
-                                        const HomeScreen(),
-                                  ),
-                                );
-                            },
-      
+                           onPressed: () async {
+                          final profileProvider =
+                              context.read<ProfileProvider>();
+
+                          await profileProvider.saveProfile();
+
+                          if (!context.mounted) return;
+
+                          showSnackBar(
+                            context,
+                            "Profile first step data saved  successfully",
+                          );
+
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) =>
+                                  const MainNavigationScreen(),
+                            ),
+                            (route) => false,
+                          );
+                        },
                             child: const Text(
                               "skip",
                             ),
@@ -359,39 +396,42 @@ void initState() {
                           child: CustomButton(
                             text: "Save Profile",
                             onTap: () async {
-                              if (!_formKey.currentState!.validate()) {
-                                return;
-                              }
+                            if (!_formKey.currentState!.validate()) {
+                              return;
+                            }
 
-                              final profileProvider =
-                                  context.read<ProfileProvider>();
+                            final profileProvider =
+                                context.read<ProfileProvider>();
 
-                              profileProvider.draftProfile.provinceId =
-                                  selectedProvince!;
+                            // Update draft with whatever is currently
+                            // selected on this screen.
+                            profileProvider.draftProfile.provinceId =
+                                selectedProvince;
 
-                              profileProvider.draftProfile.districtId =
-                                  selectedDistrict!;
+                            profileProvider.draftProfile.districtId =
+                                selectedDistrict;
 
-                              profileProvider.draftProfile.budgetRange =
-                                  selectedBudget!;
+                            profileProvider.draftProfile.budgetRange =
+                                selectedBudget;
 
-                              await profileProvider.saveProfile();
+                            await profileProvider.saveProfile();
 
-                              if (!context.mounted) return;
+                            if (!context.mounted) return;
 
-                              showSnackBar(
-                                context,
-                                "Profile completed successfully",
-                              );
+                            showSnackBar(
+                              context,
+                              "Profile saved successfully",
+                            );
 
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const HomeScreen(),
-                                ),
-                                (route) => false,
-                              );
-                            },
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    const MainNavigationScreen(),
+                              ),
+                              (route) => false,
+                            );
+                          },
                           )
                         ),
                       ],

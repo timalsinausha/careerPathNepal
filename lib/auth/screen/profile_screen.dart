@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/profile_provider.dart';
+import 'profile_firststep.dart';
 
 
 class ProfileScreen extends StatefulWidget {
@@ -46,11 +47,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
     child,
   ) {
 
-    if (profileProvider.isLoading) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
+  if (profileProvider.isLoading &&
+    !profileProvider.hasLoadedProfile) {
+  return const Center(
+    child: CircularProgressIndicator(),
+  );
+}
+
+if (profileProvider.error != null &&
+    !profileProvider.hasLoadedProfile) {
+  return Center(
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Text(
+          "Unable to load profile",
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+
+        const SizedBox(height: 12),
+
+        ElevatedButton(
+          onPressed: profileProvider.getProfile,
+          child: const Text("Try Again"),
+        ),
+      ],
+    ),
+  );
+}
+
+final profile = profileProvider.profile;
+
+if (profile == null) {
+  return const Center(
+    child: Text("Profile not available"),
+  );
+}
 
     if (profileProvider.error != null) {
       return Center(
@@ -77,13 +112,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
     }
 
-    final profile = profileProvider.profile;
+    //final profile = profileProvider.profile;
 
-    if (profile == null) {
-      return const Center(
-        child: Text("Profile not found"),
-      );
-    }
+    // if (profile == null) {
+    //   return const Center(
+    //     child: Text("Profile not found"),
+    //   );
+    // }
 
     return SingleChildScrollView(
       child: Column(
@@ -114,6 +149,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
           CustomProfileInfoCard(
             profile: profile,
+             onEditContact: () {
+            _showEditContactDialog(
+              context,
+              profile.user.contactNumber,
+            );
+          },
+           onEditStudentProfile: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => ProfileFirstStep(
+                 profile: profile,
+                ),
+              ),
+            );
+          },
           ),
 
           const SizedBox(height: 20),
@@ -125,4 +176,82 @@ class _ProfileScreenState extends State<ProfileScreen> {
       
     );
   }
+
+  void _showEditContactDialog(
+  BuildContext context,
+  String currentContact,
+) {
+  final controller = TextEditingController(
+    text: currentContact,
+  );
+
+  showDialog(
+    context: context,
+    builder: (dialogContext) {
+      return AlertDialog(
+        title: const Text(
+          "Update Contact Number",
+        ),
+
+        content: TextField(
+          controller: controller,
+          keyboardType: TextInputType.phone,
+
+          decoration: const InputDecoration(
+            labelText: "Contact Number",
+            hintText: "9800000000",
+            border: OutlineInputBorder(),
+          ),
+        ),
+
+        actions: [
+
+          TextButton(
+            onPressed: () {
+              Navigator.pop(dialogContext);
+            },
+            child: const Text("Cancel"),
+          ),
+
+          ElevatedButton(
+            onPressed: () async {
+
+              final contact =
+                  controller.text.trim();
+
+              if (contact.isEmpty) {
+                return;
+              }
+
+              final provider =
+                  context.read<ProfileProvider>();
+
+              final success =
+                  await provider.updateUserProfile(
+                contactNumber: contact,
+              );
+
+              if (!context.mounted) return;
+
+              Navigator.pop(dialogContext);
+
+              if (success) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      "Contact number updated successfully",
+                    ),
+                  ),
+                );
+              }
+            },
+
+            child: const Text("Save"),
+          ),
+        ],
+      );
+    },
+  );
+}
 }

@@ -29,13 +29,19 @@ class ProfileProvider extends ChangeNotifier {
   ProfileResponse? _profile;
   ProfileResponse? get profile => _profile;
 
+  bool _hasLoadedProfile = false;
+
+bool get hasLoadedProfile => _hasLoadedProfile;
+
   Future<ProfileResponse> getProfile() async {
     _isLoading = true;
     notifyListeners();
 
     try {
       _profile = await _profileApiService.getProfile();
+        _hasLoadedProfile = true;
       return _profile!;
+      
       
     } finally {
       _isLoading = false;
@@ -44,14 +50,38 @@ class ProfileProvider extends ChangeNotifier {
   }
 
   void setEducation({
-  required String level,
-  required String institution,
-  required double score,
+   String? level,
+   String? institution,
+   double? score,
 }) {
   draftProfile.highestEducationLevel = level;
   draftProfile.highestEducationInstitution =
       institution;
   draftProfile.academicScore = score;
+
+  notifyListeners();
+}
+
+void initializeDraftFromProfile(ProfileResponse profile) {
+  final student = profile.studentProfile;
+
+  draftProfile.highestEducationLevel =
+      student.highestEducationLevel;
+
+  draftProfile.highestEducationInstitution =
+      student.highestEducationInstitution;
+
+  draftProfile.academicScore =
+      student.academicScore;
+
+  draftProfile.provinceId =
+      student.province?.id;
+
+  draftProfile.districtId =
+      student.district?.id;
+
+  draftProfile.budgetRange =
+      student.budgetRange;
 
   notifyListeners();
 }
@@ -68,13 +98,14 @@ void setLocation({
   notifyListeners();
 }
 
-
+//to update student details like education.
 Future<void> saveProfile(
 ) async {
   _isLoading = true;
   notifyListeners();
 
   try {
+    print("PROFILE: Calling API...");
     await _profileApiService.saveProfile(
       draftProfile,
     );
@@ -87,6 +118,39 @@ Future<void> saveProfile(
   }
 }
 
+//to update user details
+Future<bool> updateUserProfile({
+  String? firstName,
+  String? lastName,
+  String? contactNumber,
+}) async {
+  _isLoading = true;
+  _error = null;
+
+  notifyListeners();
+
+  try {
+     print("userPROFILE: Calling API...");
+    await _profileApiService.updateUserProfile(
+      firstName: firstName,
+      lastName: lastName,
+      contactNumber: contactNumber,
+    );
+print("userPROFILE: Calling API...done");
+    // Get latest profile from backend
+    await getProfile();
+
+    return true;
+  } catch (e) {
+    _error = e.toString();
+
+    return false;
+  } finally {
+    _isLoading = false;
+
+    notifyListeners();
+  }
+}
 
 Future<void> loadProvinces() async {
     _isLoading = true;

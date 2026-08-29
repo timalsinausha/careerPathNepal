@@ -1,4 +1,3 @@
-import 'package:careernepal/screens/home_screen.dart';
 import 'package:careernepal/auth/screen/profile_secondstep.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,11 +7,13 @@ import '../../../widgets/custom_dropdown.dart';
 import '../../../widgets/custom_textfield.dart';
 import '../../navigation/screen/main_navigation_screen.dart';
 import '../model/education_level.dart';
+import '../model/profile_response.dart';
 import '../provider/profile_provider.dart';
 
 
 class ProfileFirstStep extends StatefulWidget {
-  const ProfileFirstStep({super.key});
+   final ProfileResponse? profile;
+  const ProfileFirstStep({super.key,this.profile});
 
   @override
   State<ProfileFirstStep> createState() =>
@@ -21,6 +22,7 @@ class ProfileFirstStep extends StatefulWidget {
 
 class _ProfileFirstStepState
     extends State<ProfileFirstStep> {
+  bool get isEditing => widget.profile != null;
   final _formKey = GlobalKey<FormState>();
 
   final institutionController =
@@ -30,6 +32,31 @@ class _ProfileFirstStepState
       TextEditingController();
 
   String? selectedEducation;
+@override
+void initState() {
+  super.initState();
+
+  if (widget.profile != null) {
+    final provider =
+        context.read<ProfileProvider>();
+
+    provider.initializeDraftFromProfile(
+      widget.profile!,
+    );
+
+    final student =
+        widget.profile!.studentProfile;
+
+    selectedEducation =
+        student.highestEducationLevel;
+
+    institutionController.text =
+        student.highestEducationInstitution ?? "";
+
+    scoreController.text =
+        student.academicScore?.toString() ?? "";
+  }
+}
 
   @override
   void dispose() {
@@ -94,9 +121,10 @@ class _ProfileFirstStepState
                             height: 12,
                           ),
 
-                          const Text(
-                            "Complete Your Profile",
-                            style: TextStyle(
+                           Text(
+                            isEditing?
+                            "Edit Your Profile" : "Complete Your Profile",
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 24,
                               fontWeight:
@@ -365,23 +393,50 @@ class _ProfileFirstStepState
                                             16),
                               ),
                             ),
+                          onPressed: () async {
+                            print("clicked.");
+                            final provider =
+                                context.read<ProfileProvider>();
+
+                            provider.setEducation(
+                              level: selectedEducation,
+                              institution:
+                                  institutionController.text.trim(),
+                              score: double.tryParse(
+                                scoreController.text.trim(),
+                              ),
+                            );
+
+                            await provider.saveProfile();
+
+                            if (!context.mounted) return;
+
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    const MainNavigationScreen(),
+                              ),
+                              (route) => false,
+                            );
+                          },
       
-                            onPressed: () {
-                              Navigator.pushReplacement(
-  context,
-  MaterialPageRoute(
-    builder: (_) => const MainNavigationScreen(),
-  ),
-);
-                              //  Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (_) =>
-                              //           const HomeScreen(),
-                              //     ),
-                              //   );
+//                             onPressed: () {
+//                               Navigator.pushReplacement(
+//   context,
+//   MaterialPageRoute(
+//     builder: (_) => const MainNavigationScreen(),
+//   ),
+// );
+//                               //  Navigator.push(
+//                               //     context,
+//                               //     MaterialPageRoute(
+//                               //       builder: (_) =>
+//                               //           const HomeScreen(),
+//                               //     ),
+//                               //   );
                              
-                            },
+//                             },
       
                             child: const Text(
                               "Skip",
@@ -445,4 +500,6 @@ class _ProfileFirstStepState
       },
     );
   }
+
+  
 }
