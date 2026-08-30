@@ -44,6 +44,26 @@ int? selectedOptionForCurrentQuestion() {
 
 }
 
+// Future<bool> startAssessment() async {
+//   _isLoading = true;
+//   notifyListeners();
+
+//   try {
+//     await loadQuestions();
+
+//     // No attempt is created yet.
+//     currentAttemptId = null;
+
+//     return true;
+//   } catch (e) {
+//     debugPrint(e.toString());
+//     return false;
+//   } finally {
+//     _isLoading = false;
+//     notifyListeners();
+//   }
+// }
+
   Future<bool> startAssessment() async {
 
   _isLoading = true;
@@ -88,6 +108,8 @@ int? selectedOptionForCurrentQuestion() {
         await _api.getQuestions();
 
     _questions = response.questions;
+
+    _currentQuestionIndex=0;
 
   } finally {
 
@@ -142,6 +164,28 @@ void selectOption(
   notifyListeners();
 }
 
+
+// Future<void> submitCurrentAnswer() async {
+//   final optionId = selectedOptionForCurrentQuestion();
+
+//   if (optionId == null) {
+//     throw Exception("Please select an option.");
+//   }
+
+//   if (currentAttemptId == null) {
+//     throw Exception("Assessment attempt not found.");
+//   }
+
+//   await _api.submitAnswer(
+//     SubmitAnswerRequest(
+//       attemptId: currentAttemptId!,
+//       questionId: currentQuestion.id,
+//       optionId: optionId,
+//     ),
+//   );
+// }
+
+
 Future<void> submitCurrentAnswer() async {
 
   final optionId =
@@ -168,6 +212,8 @@ Future<void> submitCurrentAnswer() async {
   );
 
 }
+
+
 Future<void> loadProgress() async {
 
   final progress = await _api.getProgress(currentAttemptId!);
@@ -238,6 +284,13 @@ Future<void> getAssessmentStatus() async {
 
 }
 
+void clear() {
+  _questions = [];
+  _currentQuestionIndex = 0;
+  currentAttemptId = null;
+  //_assessmentStatus = null;
+  notifyListeners();
+}
 
 
 }

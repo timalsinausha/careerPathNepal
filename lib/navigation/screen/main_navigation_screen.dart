@@ -6,6 +6,7 @@ import '../../screens/explores_screen.dart';
 import '../../screens/home_screen.dart';
 import '../../assessment/screen/assement_intro_screen.dart';
 import '../../auth/screen/profile_screen.dart';
+import '../../screens/setting/setting_screen.dart';
 import '../providers/bottom_nav_provider.dart';
 import '../widget/custom_bottom_nav.dart';
 
@@ -22,6 +23,7 @@ class MainNavigationScreen extends StatelessWidget {
       const ExploreScreen(),
       const AssessmentIntroScreen(),
       const ProfileScreen(),
+      const SettingsScreen(),
     ];
 
     return Scaffold(

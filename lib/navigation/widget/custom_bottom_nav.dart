@@ -37,7 +37,7 @@ class CustomBottomNav extends StatelessWidget {
           _navItem(
             context,
             icon: Icons.search,
-            activeIcon: Icons.quiz,
+            activeIcon: Icons.explore_rounded,
             label: "Explore",
             index: 1,
           ),
@@ -56,6 +56,14 @@ class CustomBottomNav extends StatelessWidget {
             activeIcon: Icons.person,
             label: "Profile",
             index: 3,
+          ),
+
+           _navItem(
+            context,
+            icon: Icons.settings,
+            activeIcon: Icons.settings,
+            label: "Setting",
+            index: 4,
           ),
         ],
       ),

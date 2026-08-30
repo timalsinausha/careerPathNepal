@@ -1,3 +1,4 @@
+import 'package:careernepal/navigation/screen/main_navigation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../careers/providers/recommendation_provider.dart';
@@ -5,6 +6,7 @@ import '../../careers/screens/career_details_screen.dart';
 import '../models/assessment_result_response.dart';
 import '../provider/assessment_provider.dart';
 import 'assement_intro_screen.dart';
+import 'assessment_start_screen.dart';
 
 
 class AssessmentResultScreen extends StatefulWidget {
@@ -191,6 +193,14 @@ Widget build(BuildContext context) {
 
   
 final status = assessmentProvider.assessmentStatus;
+if (status == null) {
+  return const Scaffold(
+    body: Center(
+      child: Text("Unable to determine assessment status"),
+    ),
+  );
+}
+
 if (status != null && !status.hasAttempt) {
 return Scaffold(
 backgroundColor: const Color(0xffF5F7FB),
@@ -317,6 +327,14 @@ final recommendationProvider =
  backgroundColor: const Color(0xffF5F7FB),
     appBar: AppBar(
       title: const Text("Assessment Result"),
+      leading: IconButton(onPressed: (){
+               Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>  MainNavigationScreen( )
+                                  ),
+                                ); 
+      }, icon: Icon(Icons.arrow_back_ios)),
     ),
 
     body: SingleChildScrollView(
@@ -569,14 +587,14 @@ else
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
                                             Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (_) =>  CareerDetailScreen(
-  slug: career.career.slug,
-  matchScore: career.displayMatchScore,
-)
-  ),
-);     
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) =>  CareerDetailScreen(
+                                  slug: career.career.slug,
+                                  matchScore: career.displayMatchScore,
+                                )
+                                  ),
+                                );     
             },
           ),
         ),
