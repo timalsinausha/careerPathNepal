@@ -58,6 +58,20 @@ Future<String> refreshToken(String refreshToken) async {
   }
 }
 
+Future<void> changePassword({
+  required String currentPassword,
+  required String newPassword,
+}) async {
+  await DioClient.dio.post(
+    "${ApiConstants.changePassword}",
+    data: {
+      "current_password": currentPassword,
+      "new_password": newPassword,
+    },
+  );
+}
+
+
  String _handleError(DioException e) {
   if (e.response != null) {
     final data = e.response?.data;

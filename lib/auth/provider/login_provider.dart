@@ -19,6 +19,15 @@ class LoginProvider extends ChangeNotifier {
 
   bool get isLoggedIn => _loginResponse != null;
 
+   bool _isLoginPasswordHidden = true;
+
+  bool get isLoginPasswordHidden => _isLoginPasswordHidden;
+
+    void toggleLoginPasswordVisibility() {
+    _isLoginPasswordHidden = !_isLoginPasswordHidden;
+    notifyListeners();
+  }
+
   Future<bool> login({
     required String email,
     required String password,

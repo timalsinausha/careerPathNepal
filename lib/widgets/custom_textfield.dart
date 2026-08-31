@@ -1,8 +1,9 @@
 import 'package:careernepal/auth/provider/login_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../core/colors.dart';
+import '../core/utils/colors.dart';
 
 class CustomTextField extends StatelessWidget {
 
@@ -10,8 +11,11 @@ class CustomTextField extends StatelessWidget {
   final String labelText;
   final TextEditingController controller;
   final String? Function(String?) validator;
-  final bool isPassword;
+ // final bool isPassword;
   TextInputType? keyboardType;
+  List<TextInputFormatter>? inputFormatters;
+  bool obscureText;
+  Widget? suffixIcon;
 
    CustomTextField({
     super.key,
@@ -19,8 +23,11 @@ class CustomTextField extends StatelessWidget {
     required this.labelText,
     required this.controller,
     required this.validator,
-    this.isPassword = false,
+   // this.isPassword = false,
     this.keyboardType,
+    this.inputFormatters,
+    this.obscureText = false,
+    this.suffixIcon
   });
 
   @override
@@ -43,8 +50,8 @@ class CustomTextField extends StatelessWidget {
           controller: controller,
           validator: validator,
           keyboardType: keyboardType,
-         // obscureText:
-             // isPassword ? provider.isPasswordHidden : false,
+          obscureText: obscureText,
+             inputFormatters: inputFormatters,
 
           decoration: InputDecoration(
             hintText: hintText,
@@ -56,20 +63,7 @@ class CustomTextField extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
 
-            suffixIcon: isPassword
-                ? IconButton(
-                    onPressed: () {
-                     //
-                     // provider.togglePassword();
-                    },
-                    icon: Icon(
-                      // provider.isPasswordHidden
-                      //     ? Icons.visibility_off
-                      //     : 
-                          Icons.visibility,
-                    ),
-                  )
-                : null,
+            suffixIcon:suffixIcon,
           ),
         ),
       ],

@@ -1,4 +1,4 @@
-import 'package:careernepal/core/snackar_bar.dart';
+import 'package:careernepal/core/utils/snackar_bar.dart';
 import 'package:careernepal/navigation/screen/main_navigation_screen.dart';
 import 'package:careernepal/screens/home_screen.dart';
 import 'package:flutter/material.dart';

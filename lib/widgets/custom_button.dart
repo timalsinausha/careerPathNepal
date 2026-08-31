@@ -1,6 +1,5 @@
-import 'package:careernepal/core/text_style.dart';
 import 'package:flutter/material.dart';
-import '../core/colors.dart';
+import '../core/utils/colors.dart';
 
 
 class CustomButton extends StatelessWidget {
@@ -40,7 +39,7 @@ class CustomButton extends StatelessWidget {
             color: Colors.white,
           ),
         )
-      : Text(text),
+      : Text(text,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
       ),
     );
   }

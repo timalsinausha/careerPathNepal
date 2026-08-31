@@ -21,7 +21,7 @@ class MainNavigationScreen extends StatelessWidget {
     final screens = [
       const HomeScreen(),
       const ExploreScreen(),
-      const AssessmentIntroScreen(),
+      const AssessmentIntroScreen(showBackButton: false,),
       const ProfileScreen(),
       const SettingsScreen(),
     ];

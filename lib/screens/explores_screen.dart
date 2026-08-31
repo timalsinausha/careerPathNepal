@@ -49,6 +49,8 @@ void dispose() {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
         title: const Text(
           "Explore",
           style: TextStyle(

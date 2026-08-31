@@ -1,6 +1,7 @@
 import 'package:careernepal/widgets/custom_profile_image.dart';
 import 'package:careernepal/widgets/custom_profile_info_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/profile_provider.dart';
@@ -29,6 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       backgroundColor: const Color(0xffF8F8F8),
 
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: true,
 
         title: const Text(
@@ -196,6 +198,10 @@ if (profile == null) {
         content: TextField(
           controller: controller,
           keyboardType: TextInputType.phone,
+            inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+            LengthLimitingTextInputFormatter(10),
+          ],
 
           decoration: const InputDecoration(
             labelText: "Contact Number",

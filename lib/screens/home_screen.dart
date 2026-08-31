@@ -237,7 +237,10 @@ List<dynamic> getRecommendedColleges(
                             Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => const AssessmentIntroScreen(),
+                              builder: (_) => const AssessmentIntroScreen(
+                                showBackButton: true,
+
+                              ),
                             ),);
 
                           },

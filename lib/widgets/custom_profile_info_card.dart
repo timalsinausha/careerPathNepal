@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../auth/model/profile_response.dart';
+import '../auth/screen/changepassword_screen.dart';
 import 'Custom_profile_info_tile.dart';
 
 class CustomProfileInfoCard extends StatelessWidget {
@@ -159,6 +160,53 @@ class CustomProfileInfoCard extends StatelessWidget {
         ),
 
         const SizedBox(height: 16),
+        const SizedBox(height: 16),
+
+_sectionCard(
+  title: "Account Security",
+  icon: Icons.security_outlined,
+  children: [
+    ListTile(
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 4,
+      ),
+      leading: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: const Color(0xffEEF2FF),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: const Icon(
+          Icons.lock_outline,
+          color: Color(0xff274CFF),
+        ),
+      ),
+      title: const Text(
+        "Change Password",
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      subtitle: const Text(
+        "Update your account password",
+      ),
+      trailing: const Icon(
+        Icons.arrow_forward_ios,
+        size: 16,
+      ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const ChangePasswordScreen(),
+          ),
+        );
+      },
+    ),
+  ],
+),
       ],
     );
   }

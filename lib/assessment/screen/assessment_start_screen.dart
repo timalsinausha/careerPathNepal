@@ -1,5 +1,5 @@
 import 'package:careernepal/assessment/provider/assessment_provider.dart';
-import 'package:careernepal/core/snackar_bar.dart';
+import 'package:careernepal/core/utils/snackar_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +20,7 @@ class AssessmentQuestionScreen extends StatelessWidget {
           backgroundColor: const Color(0xffF5F7FB),
 
           appBar: AppBar(
-            title: const Text("Career Assessment"),
+            title: const Text("Career Assessment Questions"),
             centerTitle: true,
           ),
 

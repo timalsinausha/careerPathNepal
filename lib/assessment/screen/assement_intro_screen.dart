@@ -2,20 +2,22 @@ import 'package:careernepal/assessment/screen/assessment_start_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/snackar_bar.dart';
+import '../../core/utils/snackar_bar.dart';
 import '../provider/assessment_provider.dart';
 
 class AssessmentIntroScreen extends StatelessWidget {
-  const AssessmentIntroScreen({super.key});
+  final bool showBackButton;
+  const AssessmentIntroScreen({super.key,this.showBackButton=true});
 @override
 Widget build(BuildContext context) {
   return Scaffold(
     backgroundColor: const Color(0xffF5F7FB),
 
-    appBar: AppBar(
-      title: const Text("Career Assessment"),
-      centerTitle: true,
-    ),
+  appBar: AppBar(
+  title: const Text("Career Assessment"),
+  centerTitle: true,
+  automaticallyImplyLeading: showBackButton,
+),
 
     body: SafeArea(
       child: SingleChildScrollView(

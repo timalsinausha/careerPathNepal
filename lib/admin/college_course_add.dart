@@ -1,5 +1,5 @@
-import 'package:careernepal/core/snackar_bar.dart';
-import 'package:careernepal/core/validators.dart';
+import 'package:careernepal/core/utils/snackar_bar.dart';
+import 'package:careernepal/core/utils/validators.dart';
 import 'package:careernepal/widgets/custom_button.dart';
 import 'package:careernepal/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';

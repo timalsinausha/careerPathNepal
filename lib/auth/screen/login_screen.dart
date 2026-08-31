@@ -1,18 +1,13 @@
 import 'package:careernepal/auth/provider/login_provider.dart';
-import 'package:careernepal/core/snackar_bar.dart';
-import 'package:careernepal/core/validators.dart';
+import 'package:careernepal/core/utils/snackar_bar.dart';
+import 'package:careernepal/core/utils/validators.dart';
 import 'package:careernepal/auth/screen/profile_firststep.dart';
-import 'package:careernepal/screens/home_screen.dart';
-import 'package:careernepal/auth/screen/profile_screen.dart';
 import 'package:careernepal/auth/screen/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../navigation/screen/main_navigation_screen.dart';
 import '../provider/profile_provider.dart';
-import '../service/auth_storage_service.dart';
 import '../../widgets/custom_button.dart';
-import '../../widgets/custom_text.dart';
 import '../../widgets/custom_textfield.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -38,7 +33,7 @@ Widget build(BuildContext context) {
         backgroundColor: Colors.white,
 
         body: SafeArea(
-          child: Padding(
+          child: SingleChildScrollView(
             padding: const EdgeInsets.all(15),
             child: Form(
               key: formKey,
@@ -70,7 +65,17 @@ Widget build(BuildContext context) {
                     labelText: "Enter Password",
                     controller: passwordController,
                     validator: Validators.validatePassword,
-                    isPassword: true,
+                     obscureText: loginProvider.isLoginPasswordHidden,
+                        suffixIcon: IconButton(
+                        onPressed: () {
+                          loginProvider.toggleLoginPasswordVisibility();
+                        },
+                        icon: Icon(
+                          loginProvider.isLoginPasswordHidden
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                      ),
                   ),
 
                   const SizedBox(height: 8),
@@ -134,13 +139,6 @@ Widget build(BuildContext context) {
                               builder: (_) => const MainNavigationScreen(),
                             ),
                           );
-                            // Navigator.pushAndRemoveUntil(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (_) => const HomeScreen(),
-                            //   ),
-                            //   (route) => false,
-                            // );
                           } else {
                             Navigator.pushAndRemoveUntil(
                               context,
@@ -176,8 +174,8 @@ Widget build(BuildContext context) {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
 
-                      const CustomText(
-                        text: "Don’t have Account? ",
+                      const Text(
+                         "Don’t have Account? ",
                       ),
 
                       GestureDetector(
@@ -194,6 +192,7 @@ Widget build(BuildContext context) {
                           style: TextStyle(
                             color: Colors.blue,
                             fontWeight: FontWeight.bold,
+                            fontSize: 15
                           ),
                         ),
                       ),

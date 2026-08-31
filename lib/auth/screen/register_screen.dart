@@ -1,14 +1,13 @@
-import 'package:careernepal/core/snackar_bar.dart';
-import 'package:careernepal/core/validators.dart';
-import 'package:careernepal/screens/home_screen.dart';
+import 'package:careernepal/core/utils/snackar_bar.dart';
+import 'package:careernepal/core/utils/validators.dart';
 import 'package:careernepal/auth/screen/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../model/register_request.dart';
 import '../provider/register_provider.dart';
 import '../../widgets/custom_button.dart';
-import '../../widgets/custom_text.dart';
 import '../../widgets/custom_textfield.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -27,9 +26,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+@override
+void initState() {
+  super.initState();
+
+  passwordController.addListener(_checkPasswordMatch);
+  confirmPasswordController.addListener(_checkPasswordMatch);
+}
+
+void _checkPasswordMatch() {
+  setState(() {});
+}
 
   @override
   void dispose() {
+  passwordController.removeListener(_checkPasswordMatch);
+  confirmPasswordController.removeListener(_checkPasswordMatch);
     firstnameController.dispose();
     lastnameController.dispose();
     contactController.dispose();
@@ -87,7 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       labelText: "Enter Email",
                       hintText: "abc@gmail.com",
                       controller: emailController,
-                      validator: Validators.validateAddress,
+                      validator: Validators.validateEmail,
                     ),
 
                     const SizedBox(height: 15),
@@ -97,6 +109,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       labelText: "Enter Contact",
                       hintText: "9861XXXXXX",
                       controller: contactController,
+                       keyboardType: TextInputType.phone,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(10),
+                      ],
                       validator: Validators.validatePhone,
                     ),
 
@@ -108,24 +125,69 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       hintText: "********",
                       controller: passwordController,
                       validator: Validators.validatePassword,
-                      isPassword: true,
+                       obscureText: registerProvider.isPasswordHidden,
+                        suffixIcon: IconButton(
+                        onPressed: () {
+                          registerProvider.togglePasswordVisibility();
+                        },
+                        icon: Icon(
+                          registerProvider.isPasswordHidden
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                      ),
                     ),
 
                     const SizedBox(height: 15),
 
                     /// CONFIRM PASSWORD
                     CustomTextField(
-                      labelText: "Confirm Password",
-                      hintText: "********",
-                      controller: confirmPasswordController,
-                      validator: (value) {
-                        return Validators.validateConfirmPassword(
-                          value,
-                          passwordController.text,
-                        );
+                    labelText: "Confirm Password",
+                    hintText: "********",
+                    controller: confirmPasswordController,
+                    validator: (value) {
+                      return Validators.validateConfirmPassword(
+                        value,
+                        passwordController.text,
+                      );
+                    },
+                   obscureText: registerProvider.isConfirmPasswordHidden,
+
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        registerProvider.toggleConfirmPasswordVisibility();
                       },
-                      isPassword: true,
+                      icon: Icon(
+                        registerProvider.isConfirmPasswordHidden
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                      ),
                     ),
+                  ),
+
+                  if (confirmPasswordController.text.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 6,
+                        left: 5,
+                      ),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          confirmPasswordController.text ==
+                                  passwordController.text
+                              ? "Passwords match ✓"
+                              : "Passwords do not match",
+                          style: TextStyle(
+                            color: confirmPasswordController.text ==
+                                    passwordController.text
+                                ? Colors.green
+                                : Colors.red,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                  ),
 
                     const SizedBox(height: 30),
 
@@ -186,8 +248,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const CustomText(
-                          text: "Already have an account? ",
+                        const Text(
+                         "Already have an account? ",
                         ),
                         GestureDetector(
                           onTap: () {
@@ -203,6 +265,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             style: TextStyle(
                               color: Colors.blue,
                               fontWeight: FontWeight.bold,
+                              fontSize: 15
                             ),
                           ),
                         ),

@@ -55,7 +55,7 @@ class RecommendationProvider extends ChangeNotifier {
 }
 
   void clear() {
-
+print("CLEARING RECOMMENDATIONS");
     _recommendations = [];
 
     _error = null;
