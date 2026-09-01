@@ -8,6 +8,9 @@ class ApiConstants{
   static const String updateProfile =  "/student-profile/update/";
   static const String updateduserProfile ="/updated-profile/";
   static const String changePassword ="/change-password/";
+  static const String forgotPassword ="/forgot-password/";
+  static const String verifyOTP = "/verify-otp/";
+  static const String resetPassword = "/reset-password/";
    // Locations
   static const String provinces = "/locations/provinces/";
   static const String districts = "/locations/districts/";

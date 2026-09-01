@@ -2,10 +2,10 @@ import 'package:careernepal/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/utils/snackar_bar.dart';
-import '../../core/utils/validators.dart';
-import '../../widgets/custom_textfield.dart';
-import '../provider/changePassword_Provider.dart';
+import '../../../core/utils/snackar_bar.dart';
+import '../../../core/utils/validators.dart';
+import '../../../widgets/custom_textfield.dart';
+import '../../provider/changePassword_Provider.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});

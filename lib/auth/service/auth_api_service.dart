@@ -71,6 +71,49 @@ Future<void> changePassword({
   );
 }
 
+Future<void> forgotPassword(String email) async {
+  final response = await DioClient.dio.post(
+    "${ApiConstants.forgotPassword}",
+    data: {
+      "email": email,
+    },
+  );
+
+  if (response.statusCode != 200) {
+    throw Exception(
+      response.data["message"] ?? "Failed to send OTP",
+    );
+  }
+}
+
+Future<void> verifyOTP({
+  required String email,
+  required String otp,
+}) async {
+  await DioClient.dio.post(
+    ApiConstants.verifyOTP,
+    data: {
+      "email": email,
+      "otp": otp,
+    },
+  );
+}
+
+
+Future<void> resetPassword({
+  required String email,
+  required String newPassword,
+  required String confirmPassword,
+}) async {
+  await DioClient.dio.post(
+    ApiConstants.resetPassword,
+    data: {
+      "email": email,
+      "new_password": newPassword,
+      "confirm_password": confirmPassword,
+    },
+  );
+}
 
  String _handleError(DioException e) {
   if (e.response != null) {

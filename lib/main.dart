@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'assessment/provider/assessment_provider.dart';
 import 'auth/provider/changePassword_Provider.dart';
+import 'auth/provider/forget_passwordProvider.dart';
 import 'auth/provider/register_provider.dart';
 import 'careers/providers/career_provider.dart';
 import 'careers/providers/recommendation_provider.dart';
@@ -34,6 +35,7 @@ void main() {
          ChangeNotifierProvider(create: (_) => CourseProvider(),),
           ChangeNotifierProvider( create: (_) => CollegeProvider(),),
            ChangeNotifierProvider(create: (_) => ChangePasswordProvider(),),
+           ChangeNotifierProvider(create: (_) => ForgotPasswordProvider(),),
       ],
       child: const MyApp(),
     ),

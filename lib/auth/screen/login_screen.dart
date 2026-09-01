@@ -1,7 +1,7 @@
 import 'package:careernepal/auth/provider/login_provider.dart';
 import 'package:careernepal/core/utils/snackar_bar.dart';
 import 'package:careernepal/core/utils/validators.dart';
-import 'package:careernepal/auth/screen/profile_firststep.dart';
+import 'package:careernepal/auth/screen/profile/profile_firststep.dart';
 import 'package:careernepal/auth/screen/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +9,7 @@ import '../../navigation/screen/main_navigation_screen.dart';
 import '../provider/profile_provider.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_textfield.dart';
+import 'forgetPassword/forgetPassword_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -81,18 +82,28 @@ Widget build(BuildContext context) {
                   const SizedBox(height: 8),
 
                   Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: const Text(
-                        "Forget Password",
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 12,
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () {
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              const ForgotPasswordScreen(),
                         ),
+                      );
+
+                    },
+                    child: const Text(
+                      "Forget Password",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 12,
                       ),
                     ),
                   ),
+                ),
 
                   const SizedBox(height: 25),
 

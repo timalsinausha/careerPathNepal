@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../auth/model/profile_response.dart';
-import '../auth/screen/changepassword_screen.dart';
+import '../auth/screen/profile/changepassword_screen.dart';
 import 'Custom_profile_info_tile.dart';
 
 class CustomProfileInfoCard extends StatelessWidget {
