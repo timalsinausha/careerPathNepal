@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../careers/providers/recommendation_provider.dart';
-import '../course/screen/course_details_screen.dart';
+import '../../providers/recommendation_provider.dart';
+import '../../../course/screen/course_details_screen.dart';
 
 class RecommendedCoursesScreen
     extends StatelessWidget {

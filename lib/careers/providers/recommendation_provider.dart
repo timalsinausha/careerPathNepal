@@ -30,18 +30,10 @@ class RecommendationProvider extends ChangeNotifier {
 
   try {
 
-    print("Loading recommendations...");
-
     _recommendations =
         await _api.getRecommendations();
 
-    print("Loaded: ${_recommendations.length}");
-
   } catch (e, s) {
-
-    print("Recommendation Error");
-    print(e);
-    print(s);
 
     _error = e.toString();
 
@@ -55,7 +47,6 @@ class RecommendationProvider extends ChangeNotifier {
 }
 
   void clear() {
-print("CLEARING RECOMMENDATIONS");
     _recommendations = [];
 
     _error = null;

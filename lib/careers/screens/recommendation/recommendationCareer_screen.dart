@@ -1,29 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../careers/providers/recommendation_provider.dart';
-import '../college/screen/college_details_screen.dart';
+import '../../providers/recommendation_provider.dart';
+import '../career_details_screen.dart';
 
-
-class RecommendedCollegesScreen
-    extends StatelessWidget {
-  const RecommendedCollegesScreen({super.key});
+class RecommendedCareersScreen extends StatelessWidget {
+  const RecommendedCareersScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final provider =
         context.watch<RecommendationProvider>();
 
-    final colleges =
-        _getColleges(provider);
+    final recommendations =
+        provider.recommendations;
 
     return Scaffold(
-      backgroundColor:
-          const Color(0xffF5F7FB),
+      backgroundColor: const Color(0xffF5F7FB),
 
       appBar: AppBar(
         title: const Text(
-          "Recommended Colleges",
+          "Recommended Careers",
         ),
       ),
 
@@ -31,22 +28,29 @@ class RecommendedCollegesScreen
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : colleges.isEmpty
+
+          : recommendations.isEmpty
               ? const Center(
                   child: Text(
-                    "No recommended colleges available.",
+                    "No career recommendations available.",
                   ),
                 )
+
               : ListView.builder(
                   padding:
                       const EdgeInsets.all(16),
 
-                  itemCount: colleges.length,
+                  itemCount:
+                      recommendations.length,
 
                   itemBuilder:
                       (context, index) {
-                    final college =
-                        colleges[index];
+
+                    final recommendation =
+                        recommendations[index];
+
+                    final career =
+                        recommendation.career;
 
                     return Card(
                       margin:
@@ -71,6 +75,10 @@ class RecommendedCollegesScreen
                           vertical: 8,
                         ),
 
+                        // =================================================
+                        // ICON
+                        // =================================================
+
                         leading: Container(
                           padding:
                               const EdgeInsets.all(
@@ -83,6 +91,7 @@ class RecommendedCollegesScreen
                                 const Color(
                               0xffEEF2FF,
                             ),
+
                             borderRadius:
                                 BorderRadius.circular(
                               12,
@@ -90,26 +99,45 @@ class RecommendedCollegesScreen
                           ),
 
                           child: const Icon(
-                            Icons
-                                .school_outlined,
+                            Icons.work_outline,
                             color:
                                 Color(0xff274CFF),
                           ),
                         ),
 
+                        // =================================================
+                        // CAREER NAME
+                        // =================================================
+
                         title: Text(
-                          college.name,
+                          career.name,
+
                           style:
                               const TextStyle(
                             fontWeight:
                                 FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
 
-                        subtitle: Text(
-                          "${college.district}, "
-                          "${college.province}",
+                        // =================================================
+                        // MATCH SCORE
+                        // =================================================
+
+                        subtitle: Padding(
+                          padding:
+                              const EdgeInsets.only(
+                            top: 5,
+                          ),
+
+                          child: Text(
+                            "${recommendation.displayMatchScore.toStringAsFixed(0)}% Match",
+                          ),
                         ),
+
+                        // =================================================
+                        // ARROW
+                        // =================================================
 
                         trailing:
                             const Icon(
@@ -118,44 +146,32 @@ class RecommendedCollegesScreen
                           size: 16,
                         ),
 
+                        // =================================================
+                        // CAREER DETAIL
+                        // =================================================
+
                         onTap: () {
+
                           Navigator.push(
                             context,
+
                             MaterialPageRoute(
                               builder: (_) =>
-                                  CollegeDetailScreen(
-                                slug:
-                                    college.slug,
+                                  CareerDetailScreen(
+                                slug: career.slug,
+
+                                matchScore:
+                                    recommendation
+                                        .displayMatchScore,
                               ),
                             ),
                           );
+
                         },
                       ),
                     );
                   },
                 ),
     );
-  }
-
-  List<dynamic> _getColleges(
-    RecommendationProvider provider,
-  ) {
-    final colleges = <dynamic>[];
-
-    for (final recommendation
-        in provider.recommendations) {
-      for (final college
-          in recommendation.topColleges) {
-        final exists = colleges.any(
-          (item) => item.id == college.id,
-        );
-
-        if (!exists) {
-          colleges.add(college);
-        }
-      }
-    }
-
-    return colleges;
   }
 }

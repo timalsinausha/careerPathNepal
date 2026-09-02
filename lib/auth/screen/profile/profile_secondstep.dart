@@ -26,7 +26,6 @@ class _ProfileSecondStepState
   int? selectedDistrict;
   String? selectedBudget;
   
-
 @override
 void initState() {
   super.initState();
@@ -42,7 +41,9 @@ void initState() {
       provider.draftProfile.districtId;
 
   selectedBudget =
-      provider.draftProfile.budgetRange;
+      (provider.draftProfile.budgetRange?.isNotEmpty ?? false)
+          ? provider.draftProfile.budgetRange
+          : null;
 
   WidgetsBinding.instance.addPostFrameCallback(
     (_) async {
@@ -59,6 +60,7 @@ void initState() {
     },
   );
 }
+
 
   @override
   Widget build(BuildContext context) {

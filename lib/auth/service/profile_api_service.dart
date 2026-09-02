@@ -41,7 +41,6 @@ class ProfileApiService {
       final response = await _dio.get(
         ApiConstants.profile,
       );
-
       return ProfileResponse.fromJson(response.data);
     } on DioException catch (e) {
       throw Exception(_handleError(e));
@@ -50,14 +49,12 @@ class ProfileApiService {
 ///it will save student details like budget, gpa etc
  Future<void> saveProfile(UpdateProfileRequest request) async {
   try {
-     await _dio.patch(
+    await _dio.patch(
       ApiConstants.updateProfile,
       data: request.toJson(),
     );
 
   } on DioException catch (e) {
-    print("STATUS CODE: ${e.response?.statusCode}");
-    print("RESPONSE: ${e.response?.data}");
     rethrow;
   }
 }
@@ -82,9 +79,7 @@ Future<void> updateUserProfile({
   String? contactNumber,
 }) async {
   try {
-    print("UPDATE API: Sending request...");
-
-    final response = await DioClient.dio.patch(
+  await DioClient.dio.patch(
       ApiConstants.updateduserProfile,
       data: {
         if (firstName != null)
@@ -97,14 +92,8 @@ Future<void> updateUserProfile({
           "contact_number": contactNumber,
       },
     );
-print(
-  "UPDATE API URL: ${ApiConstants.updateduserProfile}",
-);
-    print("UPDATE API STATUS: ${response.statusCode}");
-    print("UPDATE API DATA: ${response.data}");
 
   } catch (e) {
-    print("UPDATE API ERROR: $e");
     rethrow;
   }
 }

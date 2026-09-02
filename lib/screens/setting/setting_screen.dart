@@ -1,3 +1,4 @@
+import 'package:careernepal/auth/provider/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -220,6 +221,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           if (!shouldLogout) return;
                           context.read<RecommendationProvider>().clear();
                           context.read<AssessmentProvider>().clear();
+                          context.read<ProfileProvider>().clearProfileData();
 
                           await context.read<AuthProvider>().logout();
 

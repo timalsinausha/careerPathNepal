@@ -224,10 +224,6 @@ Future<void> loadProgress() async {
 
   for (final answer in progress.answered) {
 
-    print(
-      "Q${answer.questionOrder} -> Option ${answer.selectedOptionId}",
-    );
-
     selectedAnswers[answer.questionId] =
         answer.selectedOptionId;
   }

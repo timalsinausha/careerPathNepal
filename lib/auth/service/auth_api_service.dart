@@ -31,9 +31,6 @@ class AuthApiService {
       ApiConstants.register,
       data: request.toJson(),
     );
-    debugPrint("REGISTER RESPONSE:");
-    debugPrint(response.data.toString());
-    print(response.data);
     return response.data["message"];
     //AuthResponse.fromJson(response.data);
   } on DioException catch (e) {

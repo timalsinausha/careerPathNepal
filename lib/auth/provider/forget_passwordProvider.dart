@@ -12,10 +12,6 @@ class ForgotPasswordProvider extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
 
 
-  // =====================================================
-  // SEND OTP
-  // =====================================================
-
   Future<bool> sendOTP(String email) async {
 
     _isLoading = true;
@@ -45,10 +41,6 @@ class ForgotPasswordProvider extends ChangeNotifier {
     }
   }
 
-
-  // =====================================================
-  // VERIFY OTP
-  // =====================================================
 
   Future<bool> verifyOTP({
     required String email,
@@ -84,9 +76,7 @@ class ForgotPasswordProvider extends ChangeNotifier {
   }
 
 
-  // =====================================================
-  // RESET PASSWORD
-  // =====================================================
+
 
   Future<bool> resetPassword({
     required String email,
@@ -124,9 +114,6 @@ class ForgotPasswordProvider extends ChangeNotifier {
   }
 
 
-  // =====================================================
-  // ERROR HANDLING
-  // =====================================================
 
   String _getErrorMessage(dynamic error) {
 

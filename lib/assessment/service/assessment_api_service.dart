@@ -37,12 +37,11 @@ Future<void> submitAnswer(
   SubmitAnswerRequest request,
 ) async {
 
-  final response = await DioClient.dio.post(
+  await DioClient.dio.post(
     ApiConstants.submitAnswer,
     data: request.toJson(),
   );
 
-  print(response.data);
 }
 
 Future<ProgressResponse> getProgress(

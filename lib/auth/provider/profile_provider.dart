@@ -64,9 +64,12 @@ bool get hasLoadedProfile => _hasLoadedProfile;
 
 void initializeDraftFromProfile(ProfileResponse profile) {
   final student = profile.studentProfile;
-
+  // draftProfile.highestEducationLevel =
+  //     student.highestEducationLevel;
   draftProfile.highestEducationLevel =
-      student.highestEducationLevel;
+    (student.highestEducationLevel?.isNotEmpty ?? false)
+        ? student.highestEducationLevel
+        : null;
 
   draftProfile.highestEducationInstitution =
       student.highestEducationInstitution;
@@ -80,8 +83,14 @@ void initializeDraftFromProfile(ProfileResponse profile) {
   draftProfile.districtId =
       student.district?.id;
 
-  draftProfile.budgetRange =
-      student.budgetRange;
+
+      draftProfile.budgetRange =
+    (student.budgetRange?.isNotEmpty ?? false)
+        ? student.budgetRange
+        : null;
+
+  // draftProfile.budgetRange =
+  //     student.budgetRange;
 
   notifyListeners();
 }
@@ -105,7 +114,6 @@ Future<void> saveProfile(
   notifyListeners();
 
   try {
-    print("PROFILE: Calling API...");
     await _profileApiService.saveProfile(
       draftProfile,
     );
@@ -130,13 +138,11 @@ Future<bool> updateUserProfile({
   notifyListeners();
 
   try {
-     print("userPROFILE: Calling API...");
     await _profileApiService.updateUserProfile(
       firstName: firstName,
       lastName: lastName,
       contactNumber: contactNumber,
     );
-print("userPROFILE: Calling API...done");
     // Get latest profile from backend
     await getProfile();
 
@@ -182,16 +188,20 @@ Future<void> loadProvinces() async {
     notifyListeners();
   }
 
-void clearDraft() {
+void clearProfileData() {
   draftProfile.highestEducationLevel = null;
-  draftProfile.highestEducationInstitution =
-      null;
+  draftProfile.highestEducationInstitution = null;
   draftProfile.academicScore = null;
-
   draftProfile.provinceId = null;
   draftProfile.districtId = null;
-
   draftProfile.budgetRange = null;
+
+  _profile = null;
+  _provinces = [];
+  _districts = [];
+
+  _error = null;
+  _hasLoadedProfile = false;
 
   notifyListeners();
 }

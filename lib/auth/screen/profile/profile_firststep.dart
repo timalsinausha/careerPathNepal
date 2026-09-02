@@ -48,7 +48,9 @@ void initState() {
         widget.profile!.studentProfile;
 
     selectedEducation =
-        student.highestEducationLevel;
+        (student.highestEducationLevel?.isNotEmpty ?? false)
+            ? student.highestEducationLevel
+            : null;
 
     institutionController.text =
         student.highestEducationInstitution ?? "";

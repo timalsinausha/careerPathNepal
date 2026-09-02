@@ -25,9 +25,6 @@ class _CourseDetailScreenState
   @override
   void initState() {
     super.initState();
-  print("========== COURSE DETAIL SCREEN ==========");
-  print("Slug received: '${widget.slug}'");
-  print("==========================================");
     WidgetsBinding.instance
         .addPostFrameCallback((_) {
 
@@ -91,11 +88,6 @@ class _CourseDetailScreenState
         ),
       );
     }
-    print("BUILDING COURSE BODY");
-print("Course: ${course.name}");
-print("Description: ${course.description}");
-print("Entry: ${course.entryRequirement}");
-print("Colleges: ${course.colleges.length}");
 
     return SingleChildScrollView(
       

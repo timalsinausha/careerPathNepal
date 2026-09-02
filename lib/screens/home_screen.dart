@@ -1,3 +1,4 @@
+import 'package:careernepal/careers/screens/recommendation/recommendationCareer_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,8 +7,8 @@ import '../careers/providers/recommendation_provider.dart';
 import '../careers/screens/career_details_screen.dart';
 import '../college/screen/college_details_screen.dart';
 import '../course/screen/course_details_screen.dart';
-import 'recommendedCollege_screen.dart';
-import 'recommendedcourse_screen.dart';
+import '../careers/screens/recommendation/recommendedCollege_screen.dart';
+import '../careers/screens/recommendation/recommendedcourse_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -292,8 +293,12 @@ List<dynamic> getRecommendedColleges(
               _sectionHeader(
                 title: "Recommended Careers",
                 onViewAll: () {
-                  // TODO:
-                  // Navigate to all recommendations
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const RecommendedCareersScreen(),
+                  ),
+                );
                 },
               ),
 
@@ -441,7 +446,7 @@ List<dynamic> getRecommendedColleges(
             _sectionHeader(
               title: "Recommended Courses",
               onViewAll: () {
-                print("clicked");
+               
                 Navigator.push(
                   context,
                   MaterialPageRoute(
